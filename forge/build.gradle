@@ -67,6 +67,7 @@ shadowJar {
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
+    archiveBaseName.set "${rootProject.archives_base_name}-${project.name}"
     classifier null
 }
 
@@ -117,6 +118,7 @@ if (ENV.CURSE_DEPLOY) {
             releaseType = project.release_type
             addGameVersion "Java 17"
             addGameVersion "Forge"
+
             addGameVersion "${minecraft_version}"
             relations {
                 requiredDependency 'architectury-api'
