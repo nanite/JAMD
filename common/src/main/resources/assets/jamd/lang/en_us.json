@@ -1,0 +1,4 @@
+{
+  "jamd.invalid.world": "Unable to find world '%s'",
+  "jamd.invalid.pos": "Unable to find valid portal location"
+}
