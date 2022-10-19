@@ -25,14 +25,13 @@ public class PortalBlock extends Block implements EntityBlock {
         super(Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.STONE));
     }
 
+
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
             TelerportUtils.teleport(player, level.dimension().location().equals(JAMD.DIM_ID) ? Level.OVERWORLD : JAMD.MINING_KEY, pos);
-            return InteractionResult.PASS;
-        } else {
-            return InteractionResult.FAIL;
         }
+        return InteractionResult.SUCCESS;
     }
 
 
