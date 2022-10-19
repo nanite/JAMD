@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -50,11 +51,12 @@ public class TelerportUtils {
                     BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(0, 0, 0);
                     int minY = worldTo.getMinBuildHeight();
                     int maxY = worldTo.getMaxBuildHeight();
+                    int start = worldTo.getHeight(Heightmap.Types.WORLD_SURFACE_WG, fromPos.getX(), fromPos.getZ());
 //                        int mid = (minY + maxY);
 //                        if(mid != 0) {
 //                            mid = mid / 2;
 //                        }
-                    int start = 68;
+//                    int start = 68;
                     for (int y = start - 1; y > minY; y--) {
                         if (forLocationAround(worldTo, mutableBlockPos, fromPos.getX(), fromPos.getZ(), y)) {
                             return mutableBlockPos;

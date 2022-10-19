@@ -103,11 +103,6 @@ public class DataEvent {
             cubeAll(id.getPath(),new ResourceLocation(JAMD.MOD_ID, "block/mine_portal_block"));
         }
 
-        public void itemGenerated(net.minecraft.world.item.Item item, ResourceLocation texture) {
-            ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-            getBuilder(id.getPath()).parent(getExistingFile(mcLoc("item/generated")))
-                    .texture("layer0", texture);
-        }
 
     }
 
