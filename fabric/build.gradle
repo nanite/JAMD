@@ -111,8 +111,8 @@ if (ENV.CURSE_DEPLOY) {
     curseforge {
         apiKey = ENV.CURSE_DEPLOY
         project {
-            id = rootProject.curseforge_id
-            addGameVersion "release"
+            id = project.curseforge_id
+            releaseType = project.release_type
             addGameVersion "Fabric"
             addGameVersion "Java 17"
             addGameVersion "${minecraft_version}"
