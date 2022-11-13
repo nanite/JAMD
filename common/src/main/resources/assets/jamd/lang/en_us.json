@@ -1,4 +1,5 @@
 {
   "jamd.invalid.world": "Unable to find world '%s'",
-  "jamd.invalid.pos": "Unable to find valid portal location"
+  "jamd.invalid.pos": "Unable to find valid portal location",
+  "block.jamd.mine_portal_block": "Portal to the Mining Dimension"
 }
