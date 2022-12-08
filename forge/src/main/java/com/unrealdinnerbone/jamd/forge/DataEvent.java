@@ -3,33 +3,44 @@ package com.unrealdinnerbone.jamd.forge;
 import com.mojang.datafixers.util.Pair;
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
-import com.unrealdinnerbone.jamd.data.CodecTypedGenerator;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -38,23 +49,23 @@ import java.util.function.Supplier;
 public class DataEvent {
 
     public static void onData(GatherDataEvent event) {
-        event.getGenerator().addProvider(true, new Recipe(event.getGenerator()));
+        event.getGenerator().addProvider(true, new Recipe(event.getGenerator().getPackOutput()));
         event.getGenerator().addProvider(true, new BlockState(event.getGenerator(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(true, new Item(event.getGenerator(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(true, new LootTable(event.getGenerator()));
-        event.getGenerator().addProvider(true, new Tag(event.getGenerator(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, ForgeRegistries.Keys.BIOMES, Biome.DIRECT_CODEC));
-        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, Registry.DIMENSION_TYPE_REGISTRY, DimensionType.DIRECT_CODEC));
+        event.getGenerator().addProvider(true, new LootTable(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new Tag(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+//        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, ForgeRegistries.Keys.BIOMES, Biome.DIRECT_CODEC));
+//        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, Registry.DIMENSION_TYPE_REGISTRY, DimensionType.DIRECT_CODEC));
     }
 
     public static class Tag extends BlockTagsProvider {
 
-        public Tag(DataGenerator dataGenerator, ExistingFileHelper fileHelper) {
-            super(dataGenerator, JAMD.MOD_ID, fileHelper);
+        public Tag(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper fileHelper) {
+            super(output, lookupProvider, JAMD.MOD_ID, fileHelper);
         }
 
         @Override
-        protected void addTags() {
+        protected void addTags(HolderLookup.Provider arg) {
             tag(BlockTags.MINEABLE_WITH_PICKAXE).add(JAMDRegistry.MINE_PORTAL_BLOCK.get());
             tag(BlockTags.NEEDS_DIAMOND_TOOL).add(JAMDRegistry.MINE_PORTAL_BLOCK.get());
         }
@@ -62,27 +73,26 @@ public class DataEvent {
 
     public static class LootTable extends LootTableProvider {
 
-        public LootTable(DataGenerator gen) {
-            super(gen);
+        public LootTable(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper fileHelper) {
+            super(output, Set.of(), List.of(new LootTableProvider.SubProviderEntry(BlockLootTable::new, LootContextParamSets.BLOCK)));
         }
 
-        @Override
-        protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, net.minecraft.world.level.storage.loot.LootTable.Builder>>>, LootContextParamSet>> getTables() {
-            return Collections.singletonList(Pair.of(BlockLootTable::new, LootContextParamSets.BLOCK));
-        }
+        public static class BlockLootTable extends BlockLootSubProvider {
 
-        public static class BlockLootTable extends BlockLoot {
+
+            protected BlockLootTable() {
+                super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+            }
+
 
             @Override
-            public void addTables() {
+            protected void generate() {
                 dropSelf(JAMDRegistry.MINE_PORTAL_BLOCK.get());
             }
 
             protected Iterable<Block> getKnownBlocks() {
                 return Collections.singleton(JAMDRegistry.MINE_PORTAL_BLOCK.get());
             }
-
-
         }
 
         @Override
@@ -120,14 +130,14 @@ public class DataEvent {
 
     public static class Recipe extends RecipeProvider {
 
-        Recipe(DataGenerator generatorIn) {
-            super(generatorIn);
+        Recipe(PackOutput packOutput) {
+            super(packOutput);
         }
 
 
         @Override
-        protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-            ShapedRecipeBuilder.shaped(JAMDRegistry.MINE_PORTAL_BLOCK_ITEM::get)
+        protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+            ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.MINE_PORTAL_BLOCK_ITEM::get)
                     .pattern("OOO")
                     .pattern("OEO")
                     .pattern("OOO")
