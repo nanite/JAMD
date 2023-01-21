@@ -14,20 +14,20 @@ description = "Mining Dimensions"
 [[dependencies.jamd]]
 modId = "forge"
 mandatory = true
-versionRange = "[43,)"
+versionRange = "[44,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.jamd]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.19.2]"
+versionRange = "[1.19.3]"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.jamd]]
 modId = "architectury"
 mandatory = true
-versionRange = "[6.2.43,)"
+versionRange = "[7.0.65,)"
 ordering = "AFTER"
 side = "BOTH"

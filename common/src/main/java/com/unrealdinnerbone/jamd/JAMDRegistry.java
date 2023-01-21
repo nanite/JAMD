@@ -38,19 +38,23 @@ public class JAMDRegistry {
 
     private static final DeferredRegister<Block> BLOCKS = register(Registries.BLOCK);
     private static final DeferredRegister<Item> ITEMS = register(Registries.ITEM);
+
     private static final DeferredRegister<BlockEntityType<?>> TILES = register(Registries.BLOCK_ENTITY_TYPE);
     private static final DeferredRegister<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = register(Registries.CHUNK_GENERATOR);
 
     public static final RegistrySupplier<PortalBlock> MINE_PORTAL_BLOCK = BLOCKS.register("mine_portal_block", PortalBlock::new);
-    public static final RegistrySupplier<Item> MINE_PORTAL_BLOCK_ITEM = ITEMS.register("mine_portal_block", () -> new BlockItem(MINE_PORTAL_BLOCK.get(), new Item.Properties().arch$tab(CreativeModeTabs.searchTab())));
+    public static final RegistrySupplier<Item> MINE_PORTAL_BLOCK_ITEM = ITEMS.register("mine_portal_block", () -> new BlockItem(MINE_PORTAL_BLOCK.get(), new Item.Properties()));
     public static final RegistrySupplier<BlockEntityType<PortalTileEntity>> PORTAL = TILES.register("portal", () -> BlockEntityType.Builder.of(PortalTileEntity::new, MINE_PORTAL_BLOCK.get()).build(null));
 
     public static final RegistrySupplier<Codec<CustomFlatLevelSource>> FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register(JAMD.DIM_ID.getPath(), () -> CustomFlatLevelSource.CODEC);
-    
+
     private static <T> DeferredRegister<T> register(ResourceKey<Registry<T>> registry) {
         DeferredRegister<T> deferredRegister = DeferredRegister.create(JAMD.MOD_ID, registry);
         REGISTRIES.add(deferredRegister);
         return deferredRegister;
     }
+
+
+
 
 }

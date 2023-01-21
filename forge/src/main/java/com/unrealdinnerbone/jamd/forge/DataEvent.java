@@ -1,59 +1,56 @@
 package com.unrealdinnerbone.jamd.forge;
 
-import com.mojang.datafixers.util.Pair;
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.jamd.data.DatapackRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
+import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 
 public class DataEvent {
 
+    private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+            .add(Registries.DIMENSION_TYPE, DatapackRegistry::bootstrapDimTypes)
+            .add(Registries.BIOME, DatapackRegistry::bootstrapBiomes);
+
+
     public static void onData(GatherDataEvent event) {
         event.getGenerator().addProvider(true, new Recipe(event.getGenerator().getPackOutput()));
-        event.getGenerator().addProvider(true, new BlockState(event.getGenerator(), event.getExistingFileHelper()));
-        event.getGenerator().addProvider(true, new Item(event.getGenerator(), event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new BlockState(event.getGenerator().getPackOutput(), event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new Item(event.getGenerator().getPackOutput(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(true, new LootTable(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         event.getGenerator().addProvider(true, new Tag(event.getGenerator().getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+
+        event.getGenerator().addProvider(true, new DatapackBuiltinEntriesProvider(event.getGenerator().getPackOutput(), event.getLookupProvider(), BUILDER, Collections.singleton(JAMD.MOD_ID)));
 //        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, ForgeRegistries.Keys.BIOMES, Biome.DIRECT_CODEC));
 //        event.getGenerator().addProvider(true, new CodecTypedGenerator<>(event.getGenerator(), JAMD.MOD_ID, Registry.DIMENSION_TYPE_REGISTRY, DimensionType.DIRECT_CODEC));
     }
@@ -103,8 +100,8 @@ public class DataEvent {
 
     public static class Item extends net.minecraftforge.client.model.generators.ItemModelProvider {
 
-        public Item(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-            super(generator, JAMD.MOD_ID, existingFileHelper);
+        public Item(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+            super(packOutput, JAMD.MOD_ID, existingFileHelper);
         }
 
         @Override
@@ -118,8 +115,8 @@ public class DataEvent {
 
     public static class BlockState extends BlockStateProvider {
 
-        public BlockState(DataGenerator gen, ExistingFileHelper exFileHelper) {
-            super(gen, JAMD.MOD_ID, exFileHelper);
+        public BlockState(PackOutput packOutput, ExistingFileHelper exFileHelper) {
+            super(packOutput, JAMD.MOD_ID, exFileHelper);
         }
 
         @Override
