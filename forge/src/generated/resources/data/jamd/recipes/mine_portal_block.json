@@ -6,7 +6,7 @@
       "item": "minecraft:diamond_pickaxe"
     },
     "O": {
-      "tag": "forge:obsidian"
+      "item": "minecraft:obsidian"
     }
   },
   "pattern": [

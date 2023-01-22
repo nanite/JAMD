@@ -14,7 +14,7 @@ description = "Mining Dimensions"
 [[dependencies.jamd]]
 modId = "forge"
 mandatory = true
-versionRange = "[44,)"
+versionRange = "[44.1,)"
 ordering = "NONE"
 side = "BOTH"
 

@@ -138,7 +138,7 @@ public class DataEvent {
                     .pattern("OOO")
                     .pattern("OEO")
                     .pattern("OOO")
-                    .define('O', Tags.Items.OBSIDIAN)
+                    .define('O', Items.OBSIDIAN)
                     .define('E', Items.DIAMOND_PICKAXE)
                     .unlockedBy("has_pick", has(Items.DIAMOND_PICKAXE))
                     .unlockedBy("has_obsidian", has(Items.OBSIDIAN))

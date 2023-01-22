@@ -3,16 +3,15 @@
   "id": "jamd",
   "version": "${version}",
   "name": "JAMD",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "Mining Dimensions",
   "authors": [
-    "Me!"
+    "UnRealDinnerbone"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-  "license": "Insert License Here",
-  "icon": "assets/examplemod/icon.png",
+  "license": "All Rights Reserved unless stated otherwise. Distrubtion permssion is given to FeedTheBeast and CurseForge for use in modpacks",
   "environment": "*",
   "entrypoints": {
     "main": [
