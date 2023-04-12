@@ -48,7 +48,7 @@ public class DatapackRegistry {
         return new Biome.BiomeBuilder()
                 .temperature(1)
                 .downfall(0.4f)
-                .precipitation(Biome.Precipitation.NONE)
+                .hasPrecipitation(true)
                 .temperatureAdjustment(Biome.TemperatureModifier.NONE)
                 .specialEffects(new BiomeSpecialEffects.Builder()
                         .skyColor(8103167)

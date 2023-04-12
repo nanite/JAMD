@@ -7,8 +7,6 @@ import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Function;
-
-
 public record SimpleTeleporter(PortalInfo portalInfo) implements ITeleporter {
 
     @Override
