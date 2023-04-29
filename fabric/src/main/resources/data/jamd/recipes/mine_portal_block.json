@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "O": {
+      "tag": "c:obsidian"
+    }
+  },
+  "pattern": [
+    "OOO",
+    "OEO",
+    "OOO"
+  ],
+  "result": {
+    "item": "jamd:mine_portal_block"
+  }
+}
