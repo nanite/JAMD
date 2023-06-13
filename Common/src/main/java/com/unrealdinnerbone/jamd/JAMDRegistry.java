@@ -33,7 +33,7 @@ public class JAMDRegistry implements IRegistry {
     private static final RegistryObjects<BlockEntityType<?>> TILES = RegistryFactory.create(Registries.BLOCK_ENTITY_TYPE);
     private static final RegistryObjects<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = RegistryFactory.create(Registries.CHUNK_GENERATOR);
 
-    public static final RegistryEntry<Codec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.registerGeneric("mining", () -> CustomFlatLevelSource.CODEC);
+    public static final RegistryEntry<Codec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
     public static final RegistryEntry<Block> PORTAL_BLOCK = BLOCKS.register("portal_block", PortalBlock::new);
     public static final RegistryEntry<Item> PORTAL_BLOCK_ITEM = ITEMS.register("portal_block", () -> new BlockItem(PORTAL_BLOCK.get(), new Item.Properties()));
     public static final RegistryEntry<BlockEntityType<?>> PORTAL = TILES.register("portal", () -> Services.PLATFORM.createBlockEntityType(PortalTileEntity::new, PORTAL_BLOCK.get()));
