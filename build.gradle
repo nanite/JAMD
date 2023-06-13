@@ -1,56 +1,77 @@
-plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
-    id "com.matthewprenger.cursegradle" version "1.4.0" apply false
-}
-
-architectury {
-    minecraft = rootProject.minecraft_version
-}
-
 subprojects {
-    apply plugin: "dev.architectury.loom"
 
-    loom {
-        silentMojangMappingsLicense()
+    apply plugin: 'java'
 
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+    def env = System.getenv();
+    def isSnapshot = env.SNAPSHOT == "true"
+    ext.ENV = env
+    ext.SNAPSHOT = isSnapshot
+
+    version = "${parent.mod_version}+mc${parent.minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
+    group = parent.maven_group
+
+    jar {
+        from(rootProject.file("LICENSE")) {
+            rename { "${it}_${mod_name}" }
+        }
+        manifest {
+            attributes([
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    'Timestamp'               : System.currentTimeMillis(),
+                    'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
+                    'Built-On-Minecraft'      : minecraft_version
+            ])
+        }
     }
 
     repositories {
+        mavenCentral()
         maven {
-            name = 'ParchmentMC'
-            url = 'https://maven.parchmentmc.org'
+            name = 'Sponge / Mixin'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = 'Nanite Releases'
+            url = 'https://maven.nanite.dev/releases'
         }
     }
-
-    dependencies {
-        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
-        mappings loom.layered() {
-            officialMojangMappings()
-        }
-    }
-}
-
-allprojects {
-    apply plugin: "java"
-    apply plugin: "architectury-plugin"
-    apply plugin: "maven-publish"
-    apply plugin: 'com.matthewprenger.cursegradle'
-
-    def ENV = System.getenv()
-
-    archivesBaseName = rootProject.archives_base_name
-    version = "${mod_version}-build.${ENV.GITHUB_RUN_NUMBER ?: 9999}+mc${minecraft_version}"
-    group = rootProject.maven_group
-
-    repositories {}
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
         options.release = 17
     }
 
+
+    sourceSets.main.resources.srcDir 'src/generated/resources'
+
     java {
         withSourcesJar()
+    }
+
+    processResources {
+
+        def buildProps = project.properties.clone()
+
+        buildProps.put('file', [jarVersion: project.version])
+
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml']) {
+
+            expand buildProps
+        }
+    }
+}
+
+
+task curseforgePublish {
+    doLast {
+        println "Hello from ${project.name}!"
     }
 }

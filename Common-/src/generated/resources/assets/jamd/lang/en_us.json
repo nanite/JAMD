@@ -1,0 +1,6 @@
+{
+  "biome.jamd.mining": "Mining",
+  "block.jamd.portal_block": "Mining Portal",
+  "jamd.invalid.pos": "Unable to find valid portal location",
+  "jamd.invalid.world": "Unable to find world '%s'"
+}

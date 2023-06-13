@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "jamd",
+  "version": "${version}",
+
+  "name": "Just Another Mining Dimension",
+  "description": "Adds a mining dimension to the game",
+  "authors": [
+    "UnRealDinnerbone"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/jamd",
+    "sources": "https://github.com/nanite/jamd",
+    "issues": "https://github.com/nanite/jamd/issues"
+  },
+  "license": "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks",
+  "icon": "assets/jamd/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.unrealdinnerbone.jamd.JAMDFabric"
+    ],
+    "fabric-datagen": [
+      "com.unrealdinnerbone.jamd.data.JAMDData"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14",
+    "minecraft": "${minecraft_version}",
+    "java": ">=17",
+    "trenzalore": "${trenzalore_version}"
+  }
+}
+  

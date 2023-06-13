@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="[44,)"
+license="All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks"
+[[mods]]
+modId="jamd"
+version="${file.jarVersion}"
+displayName="Just Another Mining Dimension"
+logoFile="assets/jamd/logo.png"
+credits=""
+authors="UnRealDinnerbone"
+description="Adds a mining dimension to the game."
+[[dependencies.jamd]]
+    modId="forge"
+    mandatory=true
+    versionRange="[44,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jamd]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[${minecraft_version}]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.jamd]]
+    modId="trenzalore"
+    mandatory=true
+    versionRange="[${trenzalore_version},)"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "jamd:block/portal_block"
+    }
+  }
+}
