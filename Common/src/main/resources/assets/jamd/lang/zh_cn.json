@@ -1,0 +1,6 @@
+{
+  "biome.jamd.mining": "采矿",
+  "block.jamd.portal_block": "采矿传送门",
+  "jamd.invalid.pos": "无法找到有效的传送门位置",
+  "jamd.invalid.world": "无法找到世界“%s”"
+}
