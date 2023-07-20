@@ -30,8 +30,9 @@ public class PortalBlock extends Block implements EntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
             TelerportUtils.teleport(player, level.dimension().location().equals(JAMD.DIM_ID) ? Level.OVERWORLD : JAMD.MINING_KEY, pos);
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
-        return InteractionResult.SUCCESS;
+        return InteractionResult.PASS;
     }
 
 
