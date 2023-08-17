@@ -7,7 +7,7 @@ plugins {
 
 archivesBaseName = "${project.property("mod_name")}-${project.name}"
 
-Project commonProject = parent.project("Common")
+Project commonProject = parent.project("common")
 
 def mixinEnabled = project.property("mixinsEnabled") == "true"
 def mixinDebug = project.property("enableMixinDebug") == "true"

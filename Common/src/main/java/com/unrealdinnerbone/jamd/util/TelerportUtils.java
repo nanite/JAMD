@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 
@@ -52,24 +53,10 @@ public class TelerportUtils {
                 .filter(pos -> worldTo.getBlockEntity(pos) instanceof PortalTileEntity)
                 .findFirst()
                 .orElseGet(() -> {
-                    BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(0, 0, 0);
-                    int minY = worldTo.getMinBuildHeight();
-                    int maxY = worldTo.getMaxBuildHeight();
-                    int start = 69; //Nice
-//                    if (start != 0) {
-//                        start = start / 2;
-//                    }
-                    for (int y = start - 1; y > minY; y--) {
-                        if (forLocationAround(worldTo, mutableBlockPos, fromPos.getX(), fromPos.getZ(), y)) {
-                            return mutableBlockPos;
-                        }
+                    BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);
+                    if(forLocationAround(worldTo, heightmapPos.mutable(), fromPos.getX(), fromPos.getZ(), heightmapPos.getY())) {
+                        return heightmapPos;
                     }
-                    for (int y = start; y < maxY; y++) {
-                        if (forLocationAround(worldTo, mutableBlockPos, fromPos.getX(), fromPos.getZ(), y)) {
-                            return mutableBlockPos;
-                        }
-                    }
-
                     return null;
                 }));
 

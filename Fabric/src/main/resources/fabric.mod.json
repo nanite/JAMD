@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.unrealdinnerbone.jamd.JAMDFabric"
+      "com.unrealdinnerbone.jamd.JAMD::init"
     ],
     "fabric-datagen": [
       "com.unrealdinnerbone.jamd.data.JAMDData"

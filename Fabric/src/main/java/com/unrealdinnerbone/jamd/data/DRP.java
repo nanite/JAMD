@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("UnstableApiUsage")
 public class DRP extends FabricDynamicRegistryProvider {
     public DRP(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
