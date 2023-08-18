@@ -1,81 +1,10 @@
-plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
-    id 'maven-publish'
-    id 'idea'
-    id 'net.darkhax.curseforgegradle' version '1.0.14'
+multiLoader.fabric() {
+    fabricLoaderVersion.set("${fabric_loader_version}")
+    fabricApiVersion.set("${fabric_version}")
 }
 
-archivesBaseName = "${project.property("mod_name")}-${project.name}"
-
-Project commonProject = parent.project("common")
-
-def mixinEnabled = project.property("mixinsEnabled") == "true"
-def mixinDebug = project.property("enableMixinDebug") == "true"
-def fabricDataGen = project.property("fabricDataGen") == "true"
-
-apply {
-    from file("../gradle/scripts/maven.gradle")
-}
+publishing.publications.mavenJava.from components.java
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    modImplementation(("com.unrealdinnerbone:Trenzalore-Fabric:${trenzalore_version}+mc${minecraft_version}"))
-    implementation commonProject
-}
-
-loom {
-    if(mixinEnabled) {
-        mixin {
-            defaultRefmapName = "${mod_id}.refmap.json"
-        }
-    }
-    runs {
-        client {
-            client()
-            setConfigName("Fabric Client")
-            ideConfigGenerated(true)
-            vmArg("-Dmixin.debug.export=${mixinDebug}")
-            runDir("run_client")
-        }
-        server {
-            server()
-            setConfigName("Fabric Server")
-            ideConfigGenerated(true)
-            vmArg("-Dmixin.debug.export=${mixinDebug}")
-            runDir("run_server")
-        }
-        data {
-            inherit client
-            setConfigName("Fabric Data")
-            ideConfigGenerated(fabricDataGen)
-
-            vmArg("-Dfabric-api.datagen")
-            vmArg("-Dfabric-api.datagen.output-dir=${commonProject.file("src/generated/resources")}")
-            vmArg("-Dfabric-api.datagen.modid=${mod_id}")
-
-            runDir "build/datagen"
-
-        }
-    }
-}
-
-processResources {
-    from commonProject.sourceSets.main.resources
-}
-
-tasks.withType(JavaCompile) {
-    source(commonProject.sourceSets.main.allSource)
-}
-
-task curseforgePublish(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
-    apiToken = ENV.CURSE_TOKEN
-    def mainFile = upload(findProperty('curse_id'), remapJar)
-    mainFile.changelog = file("../CHANGELOG.md")
-    mainFile.releaseType = "beta"
-    mainFile.changelogType = "markdown"
-    mainFile.addRequirement("trenzalore")
-    mainFile.addJavaVersion("Java 17")
+    modImplementation("com.unrealdinnerbone:trenzalore-fabric:${project.property("trenzalore_version")}")
 }

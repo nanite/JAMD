@@ -31,7 +31,7 @@ public class JAMD {
             "minecraft:ore_clay"
 
     );
-    public static final Supplier<JamdConfig> CONFIG = Suppliers.memoize(() -> ConfigManger.getOrCreateConfig(JAMD.MOD_ID, JamdConfig.class, () -> new JamdConfig(true, DEFAULT_BLACKLIST, List.of())))::get;
+    public static final Supplier<JamdConfig> CONFIG = Suppliers.memoize(() -> ConfigManger.getOrCreateConfig(JAMD.MOD_ID, JamdConfig.class, () -> new JamdConfig(true, DEFAULT_BLACKLIST, List.of())));
 
 
     public static void init() {

@@ -1,21 +1,7 @@
-plugins {
-    id 'java'
-    id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
-    id 'maven-publish'
-}
+multiLoader.common()
 
-archivesBaseName = "${project.property("mod_name")}-${project.name}"
-
-apply {
-    from file("../gradle/scripts/maven.gradle")
-}
-
-minecraft {
-    version(minecraft_version)
-}
+publishing.publications.mavenJava.from components.java
 
 dependencies {
-    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-    implementation(("com.unrealdinnerbone:Trenzalore-Common:${trenzalore_version}+mc${minecraft_version}"))
+    implementation("com.unrealdinnerbone:trenzalore-common:${project.property("trenzalore_version")}")
 }
-
