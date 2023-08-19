@@ -30,7 +30,6 @@ import java.util.List;
 
 public class JAMDRegistry implements IRegistry {
 
-
     private static final RegistryObjects<Block> BLOCKS = Regeneration.create(Registries.BLOCK);
     private static final RegistryObjects<Item> ITEMS = Regeneration.create(Registries.ITEM);
     private static final RegistryObjects<BlockEntityType<?>> TILES = Regeneration.create(Registries.BLOCK_ENTITY_TYPE);

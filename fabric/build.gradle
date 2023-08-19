@@ -6,5 +6,5 @@ multiLoader.fabric() {
 publishing.publications.mavenJava.from components.java
 
 dependencies {
-    modImplementation("com.unrealdinnerbone:trenzalore-fabric:${project.property("trenzalore_version")}")
+    modImplementation("com.unrealdinnerbone:trenzalore-fabric:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
 }

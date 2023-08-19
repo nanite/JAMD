@@ -3,5 +3,5 @@ multiLoader.common()
 publishing.publications.mavenJava.from components.java
 
 dependencies {
-    implementation("com.unrealdinnerbone:trenzalore-common:${project.property("trenzalore_version")}")
+    implementation("com.unrealdinnerbone:trenzalore-common:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
 }

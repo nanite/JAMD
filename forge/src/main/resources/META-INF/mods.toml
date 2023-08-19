@@ -3,7 +3,7 @@ loaderVersion="[44,)"
 license="All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks"
 [[mods]]
 modId="jamd"
-version="${file.jarVersion}"
+version="${mod_version}"
 displayName="Just Another Mining Dimension"
 logoFile="assets/jamd/logo.png"
 credits=""

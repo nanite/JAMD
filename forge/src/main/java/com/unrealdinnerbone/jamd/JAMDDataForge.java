@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 public class JAMDDataForge
 {
 
-    private static final ResourceKey<BiomeModifier> ADD_SELF = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(JAMD.MOD_ID, "add_mekenism"));
+    private static final ResourceKey<BiomeModifier> ADD_SELF = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(JAMD.MOD_ID, "add_self"));
 
     private static final RegistrySetBuilder builder = new RegistrySetBuilder()
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, JAMDDataForge::createBiomeModifiers);

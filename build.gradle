@@ -18,6 +18,7 @@ multiLoader.root() {
     splitSources.set(true)
     dataGen {
         useFabric.set(project(":common").file("src/generated/resources"))
+        useForge.set(project(":forge").file("src/generated/resources"))
     }
 
 }
@@ -33,7 +34,9 @@ subprojects {
     apply plugin: 'dev.nanite.mlp'
     apply plugin: 'maven-publish'
 
-    project.sourceSets.main.resources.srcDir(project.file('src/generated/resources'))
+    afterEvaluate {
+        project.sourceSets.main.resources.srcDir(project.file('src/generated/resources'))
+    }
 
     base {
         archivesName = "${mod_name}-${project.name}".toLowerCase()
