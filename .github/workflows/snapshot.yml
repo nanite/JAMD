@@ -1,9 +1,9 @@
-name: Build & Release
+name: Build & Snapshot
 
 on:
   push:
     branches:
-      - "1.*"
+      - "*"
 
 jobs:
   build:
