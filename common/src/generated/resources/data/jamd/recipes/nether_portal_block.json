@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:nether_bricks"
+    },
+    "P": {
+      "item": "minecraft:netherite_pickaxe"
+    }
+  },
+  "pattern": [
+    "OOO",
+    "OPO",
+    "OOO"
+  ],
+  "result": {
+    "item": "jamd:nether_portal"
+  },
+  "show_notification": true
+}

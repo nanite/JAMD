@@ -1,0 +1,21 @@
+{
+  "type": "jamd:end",
+  "generator": {
+    "type": "jamd:mining",
+    "settings": {
+      "biome": "jamd:end",
+      "lakes": false,
+      "features": true,
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:end_stone",
+          "height": 128
+        }
+      ]
+    }
+  }
+}

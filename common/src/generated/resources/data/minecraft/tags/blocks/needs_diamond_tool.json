@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "jamd:portal_block"
+    "jamd:portal_block",
+    "jamd:nether_portal",
+    "jamd:end_portal"
   ]
 }

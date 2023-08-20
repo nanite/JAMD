@@ -3,6 +3,7 @@ package com.unrealdinnerbone.jamd.biome;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
 import com.unrealdinnerbone.jamd.JAMD;
+import com.unrealdinnerbone.jamd.JAMDForge;
 import com.unrealdinnerbone.jamd.JAMDForgeRegistry;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
 import net.minecraft.core.Holder;
@@ -34,26 +35,40 @@ public record JAMDBiomeModifier() implements BiomeModifier
 
     public static final JAMDBiomeModifier INSTANCE = new JAMDBiomeModifier();
 
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if (phase == Phase.ADD && biome.is(JAMDRegistry.Keys.BIOME)) {
-            HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
-            List<String> strings = JAMD.CONFIG.get().blackListedOres();
-            placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
-                if(!strings.contains(placedFeature.key().location().toString())) {
-                    PlacedFeature s = placedFeature.get();
-                    boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
-                    if (isOreFeature) {
-                        List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
-                        if (features.stream().noneMatch(holder -> holder.is(placedFeature.key()))) {
-                            builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature);
-                        }
+        if(JAMD.CONFIG.get().dynamicOreAddition()) {
+            if (phase == Phase.ADD) {
+                List<String> strings = JAMD.CONFIG.get().blackListedOres();
+                if(biome.is(JAMDRegistry.Keys.OVERWORLD.biome())) {
+                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
+                    handle(strings, placedFeatureRegistryLookup, builder);
+                }else if(biome.is(JAMDRegistry.Keys.NETHER.biome())) {
+                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
+//                    List<String> strings = JAMD.CONFIG.get().blackListNether();
+                    handle(strings, placedFeatureRegistryLookup, builder);
+                }else if(biome.is(JAMDRegistry.Keys.END.biome())) {
+                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
+//                    List<String> strings = JAMD.CONFIG.get().blackListEnd();
+                    handle(strings, placedFeatureRegistryLookup, builder);
+                }
+            }
+        }
+    }
+
+    private static void handle(List<String> strings, HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+        placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
+            if(!strings.contains(placedFeature.key().location().toString())) {
+                PlacedFeature s = placedFeature.get();
+                boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
+                if (isOreFeature) {
+                    List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
+                    if (features.stream().noneMatch(holder -> holder.is(placedFeature.key()))) {
+                        builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature);
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override

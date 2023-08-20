@@ -38,11 +38,9 @@ public class JAMDDataForge
         bootstapContext.register(ADD_SELF, JAMDBiomeModifier.INSTANCE);
     }
 
-    private static class BiomeModifiers extends DatapackBuiltinEntriesProvider
-    {
+    private static class BiomeModifiers extends DatapackBuiltinEntriesProvider {
 
-        public BiomeModifiers(PackOutput output, CompletableFuture<HolderLookup.Provider> registries)
-        {
+        public BiomeModifiers(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
             super(output, registries, builder, Set.of(JAMD.MOD_ID));
         }
     }

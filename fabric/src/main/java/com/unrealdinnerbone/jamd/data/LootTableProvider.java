@@ -12,6 +12,8 @@ public class LootTableProvider extends FabricBlockLootTableProvider {
 
     @Override
     public void generate() {
-        dropSelf(JAMDRegistry.PORTAL_BLOCK.get());
+        dropSelf(JAMDRegistry.OVERWORLD.block().get());
+        dropSelf(JAMDRegistry.NETHER.block().get());
+        dropSelf(JAMDRegistry.END.block().get());
     }
 }

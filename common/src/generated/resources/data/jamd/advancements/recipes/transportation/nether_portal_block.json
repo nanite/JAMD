@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:diamond_pickaxe"
+              "minecraft:netherite_pickaxe"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jamd:portal_block"
+        "recipe": "jamd:nether_portal_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "jamd:portal_block"
+      "jamd:nether_portal_block"
     ]
   },
   "sends_telemetry_event": false

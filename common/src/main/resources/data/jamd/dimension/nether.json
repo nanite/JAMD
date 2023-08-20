@@ -1,0 +1,21 @@
+{
+  "type": "jamd:nether",
+  "generator": {
+    "type": "jamd:mining",
+    "settings": {
+      "biome": "jamd:nether",
+      "lakes": false,
+      "features": true,
+      "layers": [
+        {
+          "block": "minecraft:bedrock",
+          "height": 1
+        },
+        {
+          "block": "minecraft:netherrack",
+          "height": 128
+        }
+      ]
+    }
+  }
+}

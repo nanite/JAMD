@@ -1,7 +1,3 @@
-### 3.0.1
+### 3.2.0
 
-- Fix Trenzalore version matching
-
-### 3.0.0
-
-- Update to 1.20.1
+- Added End and Nether mining dimensions

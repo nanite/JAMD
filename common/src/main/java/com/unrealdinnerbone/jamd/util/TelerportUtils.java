@@ -2,19 +2,15 @@ package com.unrealdinnerbone.jamd.util;
 
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
-import com.unrealdinnerbone.jamd.block.PortalTileEntity;
+import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
@@ -24,12 +20,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class TelerportUtils {
-    public static void teleport(Player playerEntity, ResourceKey<Level> toWorldKey, BlockPos blockPos) {
+    public static void teleport(Player playerEntity, ResourceKey<Level> toWorldKey, BlockPos blockPos, JAMDRegistry.RegistrySet registrySet) {
         ServerLevel toWorld = playerEntity.getServer().getLevel(toWorldKey);
         if (toWorld != null) {
-            findPortalLocation(toWorld, blockPos).ifPresentOrElse(portalLocation -> {
+            findPortalLocation(toWorld, blockPos, registrySet).ifPresentOrElse(portalLocation -> {
                         if (toWorld.getBlockState(portalLocation).isAir()) {
-                            toWorld.setBlockAndUpdate(portalLocation, JAMDRegistry.PORTAL_BLOCK.get().defaultBlockState());
+                            toWorld.setBlockAndUpdate(portalLocation, registrySet.block().get().defaultBlockState());
                         }
                         Vec3 portalLocationVec = new Vec3(portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5);
                         Services.PLATFORM.teleport(playerEntity, toWorld, new PortalInfo(portalLocationVec, playerEntity.getDeltaMovement(), playerEntity.getYRot(), playerEntity.getXRot()));                    },
@@ -41,8 +37,8 @@ public class TelerportUtils {
     }
 
 
-    private static Optional<BlockPos> findPortalLocation(Level worldTo, BlockPos fromPos) {
-        if (worldTo.getBlockState(fromPos).getBlock() == JAMDRegistry.PORTAL_BLOCK.get() && isSafeSpawnLocation(worldTo, fromPos)) {
+    private static Optional<BlockPos> findPortalLocation(Level worldTo, BlockPos fromPos, JAMDRegistry.RegistrySet registrySet) {
+        if (worldTo.getBlockState(fromPos).is(registrySet.block().get()) && isSafeSpawnLocation(worldTo, fromPos)) {
             return Optional.of(fromPos.above());
         }
 
@@ -50,7 +46,7 @@ public class TelerportUtils {
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
                 .map(chunkPos -> worldTo.getChunk(chunkPos.x, chunkPos.z).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
-                .filter(pos -> worldTo.getBlockEntity(pos) instanceof PortalTileEntity)
+                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.blockEntity().get()))
                 .findFirst()
                 .orElseGet(() -> {
                     BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);

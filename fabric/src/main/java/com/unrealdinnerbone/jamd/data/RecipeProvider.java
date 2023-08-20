@@ -20,13 +20,29 @@ public class RecipeProvider extends FabricRecipeProvider {
 
     @Override
     public void buildRecipes(Consumer<FinishedRecipe> exporter) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.PORTAL_BLOCK_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.OVERWORLD.block().get())
                 .pattern("OOO")
                 .pattern("OPO")
                 .pattern("OOO")
                 .define('O', Blocks.OBSIDIAN)
                 .define('P', Items.DIAMOND_PICKAXE)
-                .unlockedBy("has_diamond_pick", has(Items.ENDER_PEARL))
+                .unlockedBy("has_diamond_pick", has(Items.DIAMOND_PICKAXE))
                 .save(exporter, new ResourceLocation(JAMD.MOD_ID, "portal_block"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.NETHER.block().get())
+                .pattern("OOO")
+                .pattern("OPO")
+                .pattern("OOO")
+                .define('O', Blocks.NETHER_BRICKS)
+                .define('P', Items.NETHERITE_PICKAXE)
+                .unlockedBy("has_diamond_pick", has(Items.NETHERITE_PICKAXE))
+                .save(exporter, new ResourceLocation(JAMD.MOD_ID, "nether_portal_block"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.END.block().get())
+                .pattern("OOO")
+                .pattern("OPO")
+                .pattern("OOO")
+                .define('O', Blocks.END_STONE)
+                .define('P', Items.DIAMOND_PICKAXE)
+                .unlockedBy("has_diamond_pick", has(Items.DIAMOND_PICKAXE))
+                .save(exporter, new ResourceLocation(JAMD.MOD_ID, "end_portal_block"));
     }
 }

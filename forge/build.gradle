@@ -20,11 +20,11 @@ repositories {
 
 dependencies {
     implementation fg.deobf("com.unrealdinnerbone:trenzalore-forge:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
-    implementation fg.deobf("curse.maven:energized-power-782147:4693008")
-    implementation fg.deobf("curse.maven:elementary-ores-332609:4622524")
-    implementation fg.deobf("curse.maven:flib-661261:4661080")
-    implementation fg.deobf("curse.maven:tool-kit-324888:4598902")
-    implementation fg.deobf("curse.maven:architectury-api-419699:4663010")
-    implementation fg.deobf("curse.maven:powah-rearchitected-633483:4638301")
-    implementation fg.deobf("curse.maven:cloth-config-348521:4633444")
+//    implementation fg.deobf("curse.maven:energized-power-782147:4693008")
+//    implementation fg.deobf("curse.maven:elementary-ores-332609:4622524")
+//    implementation fg.deobf("curse.maven:flib-661261:4661080")
+//    implementation fg.deobf("curse.maven:tool-kit-324888:4598902")
+//    implementation fg.deobf("curse.maven:architectury-api-419699:4663010")
+//    implementation fg.deobf("curse.maven:powah-rearchitected-633483:4638301")
+//    implementation fg.deobf("curse.maven:cloth-config-348521:4633444")
 }
