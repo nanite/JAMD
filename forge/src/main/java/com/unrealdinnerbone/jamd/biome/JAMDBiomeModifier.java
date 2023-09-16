@@ -58,7 +58,7 @@ public record JAMDBiomeModifier() implements BiomeModifier
 
     private static void handle(List<String> strings, HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
-            if(!strings.contains(placedFeature.key().location().toString())) {
+            if(!contains(strings, placedFeature.key().location().toString())) {
                 PlacedFeature s = placedFeature.get();
                 boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
                 if (isOreFeature) {
@@ -69,6 +69,16 @@ public record JAMDBiomeModifier() implements BiomeModifier
                 }
             }
         });
+    }
+
+    private static boolean contains(List<String> values, String value) {
+        if(value.endsWith("*")) {
+            String substring = value.substring(0, value.length() - 1);
+            return values.stream().anyMatch(s -> s.startsWith(substring));
+        }else {
+            return values.stream().anyMatch(s -> s.equalsIgnoreCase(value));
+        }
+
     }
 
     @Override

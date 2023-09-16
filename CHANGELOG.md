@@ -1,3 +1,3 @@
-### 3.2.0
+### 3.2.1
 
-- Added End and Nether mining dimensions
+- Added Wild Card support for excludes
