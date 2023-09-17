@@ -58,13 +58,15 @@ public record JAMDBiomeModifier() implements BiomeModifier
 
     private static void handle(List<String> strings, HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
-            if(!contains(strings, placedFeature.key().location().toString())) {
-                PlacedFeature s = placedFeature.get();
-                boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
-                if (isOreFeature) {
-                    List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
-                    if (features.stream().noneMatch(holder -> holder.is(placedFeature.key()))) {
-                        builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature);
+            if(!placedFeature.key().location().getNamespace().equalsIgnoreCase("enlightened_end")) {
+                if(!contains(strings, placedFeature.key().location().toString())) {
+                    PlacedFeature s = placedFeature.get();
+                    boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
+                    if (isOreFeature) {
+                        List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
+                        if (features.stream().noneMatch(holder -> holder.is(placedFeature.key()))) {
+                            builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature);
+                        }
                     }
                 }
             }
@@ -74,11 +76,15 @@ public record JAMDBiomeModifier() implements BiomeModifier
     private static boolean contains(List<String> values, String value) {
         if(value.endsWith("*")) {
             String substring = value.substring(0, value.length() - 1);
-            return values.stream().anyMatch(s -> s.startsWith(substring));
+            return values.stream().anyMatch(s -> s.toLowerCase().startsWith(substring.toLowerCase()));
         }else {
             return values.stream().anyMatch(s -> s.equalsIgnoreCase(value));
         }
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(contains(List.of("enlightened_end:adamantite_node"), "enlightened_end:*"));
     }
 
     @Override

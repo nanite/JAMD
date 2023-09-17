@@ -1,3 +1,3 @@
-### 3.2.1
+### 3.2.2
 
-- Added Wild Card support for excludes
+- Blacklist Enlightened End mod
