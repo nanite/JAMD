@@ -14,7 +14,6 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
     modID.set(project.property("mod_id"))
-    singleOutputJar.set(true)
     splitSources.set(true)
     dataGen {
         useFabric.set(project(":common").file("src/generated/resources"))
@@ -54,7 +53,11 @@ subprojects {
         }
         maven {
             name = "nanite"
-            url = uri("https://maven.nanite.dev/releases")
+            url = uri("https://maven.nanite.dev/snapshots")
+        }
+        maven {
+            name = "UnRealDinnerbone"
+            url = "https://maven.unreal.codes/releases"
         }
     }
 
@@ -81,27 +84,44 @@ subprojects {
 
 }
 
-tasks.register("singleJar", SingleOutputJar.class) {
-    getArchiveIdentifier().set("${project.property("mod_name")}ML")
-    getOutput().set(project.file("build/libs/${project.property("mod_name")}-${project.version}.jar"))
-}
-
 
 publishMods {
-    file = tasks.singleJar.output
     dryRun = providers.environmentVariable("CURSE_TOKEN").getOrNull() == null
     changelog = file("./CHANGELOG.md").text
     version = "${mod_version}"
     type = STABLE
 
-    curseforge {
-        projectId = project.property("curse_id")
-        accessToken = providers.environmentVariable("CURSE_TOKEN")
+    def fabricOptions = publishOptions {
+        file = project.provider { project(":fabric").tasks.remapJar }.flatMap { it.archiveFile }
+        displayName = "${project.name} Fabric ${mod_version}+mc${minecraft_version}"
         modLoaders.add("fabric")
+    }
+
+    def forgeOptions = publishOptions {
+        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
+        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
         modLoaders.add("forge")
+    }
+
+    def curseForgeOptions = curseforgeOptions {
+        accessToken = providers.environmentVariable("CURSE_TOKEN")
+        projectId =  project.property("curse_id")
+        minecraftVersions.add("${minecraft_version}")
+        requires {
+            slug = "trenzalore"
+        }
+    }
+
+    curseforge("curseforgeFabric") {
+        from(curseForgeOptions, fabricOptions)
         requires {
             slug = "fabric-api"
         }
     }
+
+    curseforge("curseforgeForge") {
+        from(curseForgeOptions, forgeOptions)
+    }
+
 }
 

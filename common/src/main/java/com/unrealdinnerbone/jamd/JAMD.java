@@ -1,34 +1,13 @@
 package com.unrealdinnerbone.jamd;
 
-import com.google.common.base.Suppliers;
+import com.unrealdinnerbone.config.ConfigManager;
 import com.unrealdinnerbone.trenzalore.api.config.ConfigManger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
-
 public class JAMD {
+
     public static final String MOD_ID = "jamd";
-
-    private static final List<String> DEFAULT_BLACKLIST = List.of(
-            "minecraft:ore_gold_deltas",
-            "minecraft:ore_infested",
-            "minecraft:ore_magma",
-            "minecraft:ore_gravel",
-            "minecraft:ore_soul_sand",
-            "minecraft:ore_gold_extra",
-            "minecraft:ore_quartz_nether",
-            "minecraft:ore_gold_nether",
-            "minecraft:ore_quartz_deltas",
-            "minecraft:ore_gravel_nether",
-            "minecraft:ore_dirt",
-            "minecraft:ore_blackstone",
-            "minecraft:ore_andesite_upper",
-            "minecraft:ore_clay"
-
-    );
-    public static final Supplier<JamdConfig> CONFIG = Suppliers.memoize(() -> ConfigManger.getOrCreateConfig(JAMD.MOD_ID, JamdConfig.class, () -> new JamdConfig(true, DEFAULT_BLACKLIST)));
-
+    private static final ConfigManager CONFIG_MANAGER = ConfigManger.createConfigManager(MOD_ID);
+    public static final JamdConfig CONFIG = CONFIG_MANAGER.loadConfig("general", JamdConfig::new);
 
     public static void init() {
 

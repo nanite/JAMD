@@ -1,5 +1,6 @@
 package com.unrealdinnerbone.jamd;
 
+import com.unrealdinnerbone.trenzalore.api.config.ConfigManger;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
