@@ -8,6 +8,8 @@ public class JamdConfig {
 
     private final BooleanConfig dynamicOreAdditionConfig;
     private final ListConfig<String> blackListedOresConfig;
+
+    private final ListConfig<String> additionalOresConfig;
     public JamdConfig(ConfigCreator configCreator) {
         dynamicOreAdditionConfig = configCreator.createBoolean("dynamicOreAddition", true);
         blackListedOresConfig = configCreator.createList("blackListedOres", new String[]{
@@ -27,6 +29,7 @@ public class JamdConfig {
                         "minecraft:ore_clay",
                         "enlightened_end:.*"
                 }, String[].class);
+        additionalOresConfig = configCreator.createList("additionalOres", new String[]{}, String[].class);
     }
 
     public BooleanConfig getDynamicOreAdditionConfig() {
@@ -35,5 +38,9 @@ public class JamdConfig {
 
     public ListConfig<String> getBlackListedOresConfig() {
         return blackListedOresConfig;
+    }
+
+    public ListConfig<String> getAdditionalOresConfig() {
+        return additionalOresConfig;
     }
 }

@@ -16,6 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -41,6 +42,8 @@ public class JAMDBiomeModifier implements BiomeModifier
     private static final Logger LOGGER = LogUtils.getLogger();
     private final List<Pattern> matches;
     private final boolean dynamicOreAddition;
+
+    private final List<ResourceKey<PlacedFeature>> placedFeatures;
     public JAMDBiomeModifier() {
         try {
             dynamicOreAddition = JAMD.CONFIG.getDynamicOreAdditionConfig().getExceptionally();
@@ -48,6 +51,18 @@ public class JAMDBiomeModifier implements BiomeModifier
                     .filter(Objects::nonNull)
                     .map(Pattern::compile)
                     .toList();
+            placedFeatures = new ArrayList<>();
+            Arrays.stream(JAMD.CONFIG.getAdditionalOresConfig().getExceptionally())
+                    .filter(Objects::nonNull)
+                    .forEach(resourceLocation -> {
+                        try {
+                            ResourceLocation p135787 = new ResourceLocation(resourceLocation);
+                            ResourceKey<PlacedFeature> key = ResourceKey.create(Registries.PLACED_FEATURE, p135787);
+                            placedFeatures.add(key);
+                        }catch (Exception e) {
+                            LOGGER.error("Failed to create key for {} ", resourceLocation, e);
+                        }
+                    });
         } catch (ConfigException e) {
             throw new RuntimeException("Failed to load config", e);
         }
@@ -74,6 +89,20 @@ public class JAMDBiomeModifier implements BiomeModifier
     }
 
     private void handle(HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+
+
+        for (ResourceKey<PlacedFeature> placedFeature : placedFeatures) {
+            placedFeatureRegistryLookup.get(placedFeature).ifPresent(placedFeature1 -> {
+                List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
+                if (features.stream().noneMatch(holder -> holder.is(placedFeature))) {
+                    LOGGER.debug("Force Adding: " + placedFeature.location());
+                    builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature1);
+                }else {
+                    LOGGER.debug("Skipping Force Added as it already exists: " + placedFeature.location());
+                }
+            });
+        }
+
         placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
             if (!matches(placedFeature.key().location().toString())) {
                 PlacedFeature s = placedFeature.get();
