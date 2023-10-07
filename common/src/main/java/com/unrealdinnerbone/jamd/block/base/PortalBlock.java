@@ -48,10 +48,8 @@ public abstract class PortalBlock extends Block implements EntityBlock {
             }else {
                 player.displayClientMessage(Component.literal("You can't teleport from this dimension"), true);
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }else {
-            return InteractionResult.PASS;
         }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
 }
