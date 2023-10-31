@@ -1,0 +1,124 @@
+{
+  "ores": [
+    {
+      "min_y": 0,
+      "max_y": 128,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:glowstone"
+          }
+        }
+      ],
+      "id": "ore_blackstone",
+      "ore_size": 16,
+      "ore_amount": 8,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 5,
+      "max_y": 220,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:blackstone"
+          }
+        }
+      ],
+      "id": "ore_blackstone",
+      "ore_size": 33,
+      "ore_amount": 2,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 10,
+      "max_y": 255,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:nether_gold_ore"
+          }
+        }
+      ],
+      "id": "ore_gold_nether",
+      "ore_size": 10,
+      "ore_amount": 10,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 27,
+      "max_y": 36,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:magma_block"
+          }
+        }
+      ],
+      "id": "ore_magma",
+      "ore_size": 33,
+      "ore_amount": 4,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 10,
+      "max_y": 255,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:nether_quartz_ore"
+          }
+        }
+      ],
+      "id": "ore_quartz_nether",
+      "ore_size": 14,
+      "ore_amount": 16,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 0,
+      "max_y": 31,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:netherrack",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "minecraft:soul_sand"
+          }
+        }
+      ],
+      "id": "ore_soul_sand",
+      "ore_size": 12,
+      "ore_amount": 12,
+      "discard_on_air_chance": 0.0
+    }
+  ]
+}

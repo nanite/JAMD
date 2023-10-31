@@ -1,0 +1,392 @@
+{
+  "ores": [
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:andesite"
+          }
+        }
+      ],
+      "id": "ore_andesite_lower",
+      "ore_size": 64,
+      "ore_amount": 2,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:clay"
+          }
+        }
+      ],
+      "id": "ore_clay",
+      "ore_size": 33,
+      "ore_amount": 4,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:coal_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_coal_ore"
+          }
+        }
+      ],
+      "id": "ore_coal",
+      "ore_size": 17,
+      "ore_amount": 50,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": -16,
+      "max_y": 112,
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:copper_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_copper_ore"
+          }
+        }
+      ],
+      "id": "ore_copper",
+      "ore_size": 10,
+      "ore_amount": 32,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:diorite"
+          }
+        }
+      ],
+      "id": "ore_diorite",
+      "ore_size": 64,
+      "ore_amount": 2,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:dirt"
+          }
+        }
+      ],
+      "id": "ore_dirt",
+      "ore_size": 33,
+      "ore_amount": 7,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": -16,
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:emerald_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_emerald_ore"
+          }
+        }
+      ],
+      "id": "ore_emerald",
+      "ore_size": 3,
+      "ore_amount": 100,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": -64,
+      "max_y": 32,
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:gold_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_gold_ore"
+          }
+        }
+      ],
+      "id": "ore_gold",
+      "ore_size": 9,
+      "ore_amount": 4,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": 0,
+      "max_y": 60,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:granite"
+          }
+        }
+      ],
+      "id": "ore_granite_lower",
+      "ore_size": 64,
+      "ore_amount": 2,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:gravel"
+          }
+        }
+      ],
+      "id": "ore_gravel",
+      "ore_size": 33,
+      "ore_amount": 14,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": -24,
+      "max_y": 56,
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:iron_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_iron_ore"
+          }
+        }
+      ],
+      "id": "ore_iron_middle",
+      "ore_size": 9,
+      "ore_amount": 10,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "max_y": 72,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:iron_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_iron_ore"
+          }
+        }
+      ],
+      "id": "ore_iron_small",
+      "ore_size": 4,
+      "ore_amount": 10,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:iron_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_iron_ore"
+          }
+        }
+      ],
+      "id": "ore_iron_upper",
+      "ore_size": 9,
+      "ore_amount": 90,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "min_y": -32,
+      "max_y": 64,
+      "placement_type": "triangle",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:lapis_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:deepslate_lapis_ore"
+          }
+        }
+      ],
+      "id": "ore_lapis",
+      "ore_size": 7,
+      "ore_amount": 6,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "max_y": 15,
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Properties": {
+              "lit": "false"
+            },
+            "Name": "minecraft:redstone_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Properties": {
+              "lit": "false"
+            },
+            "Name": "minecraft:deepslate_redstone_ore"
+          }
+        }
+      ],
+      "id": "ore_redstone",
+      "ore_size": 8,
+      "ore_amount": 4,
+      "discard_on_air_chance": 0.0
+    },
+    {
+      "placement_type": "uniform",
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:base_stone_overworld",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "minecraft:tuff"
+          }
+        }
+      ],
+      "id": "ore_tuff",
+      "ore_size": 64,
+      "ore_amount": 2,
+      "discard_on_air_chance": 0.0
+    }
+  ]
+}

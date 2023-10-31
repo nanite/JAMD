@@ -4,8 +4,6 @@
     "type": "jamd:mining",
     "settings": {
       "biome": "jamd:mining",
-      "lakes": false,
-      "features": true,
       "layers": [
         {
           "block": "minecraft:bedrock",

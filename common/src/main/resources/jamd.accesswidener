@@ -1,0 +1,6 @@
+accessWidener v1 named
+accessible field net/minecraft/world/level/levelgen/flat/FlatLevelGeneratorSettings biome Lnet/minecraft/core/Holder;
+accessible method net/minecraft/world/level/levelgen/feature/configurations/OreConfiguration$TargetBlockState <init> (Lnet/minecraft/world/level/levelgen/structure/templatesystem/RuleTest;Lnet/minecraft/world/level/block/state/BlockState;)V
+accessible field net/minecraft/world/level/levelgen/placement/HeightRangePlacement height Lnet/minecraft/world/level/levelgen/heightproviders/HeightProvider;
+accessible field net/minecraft/world/level/levelgen/placement/CountPlacement count Lnet/minecraft/util/valueproviders/IntProvider;
+accessible field net/minecraft/world/level/levelgen/heightproviders/ConstantHeight value Lnet/minecraft/world/level/levelgen/VerticalAnchor;

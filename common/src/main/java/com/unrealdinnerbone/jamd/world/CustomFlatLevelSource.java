@@ -5,17 +5,27 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
+import org.jetbrains.annotations.NotNull;
 
 public class CustomFlatLevelSource extends FlatLevelSource {
 
+    private final CustomFlatLevelGeneratorSettings mySettings;
+
     public static final Codec<CustomFlatLevelSource> CODEC = RecordCodecBuilder.create((instance) ->
-            instance.group(FlatLevelGeneratorSettings.CODEC
+            instance.group(CustomFlatLevelGeneratorSettings.CODEC
                             .fieldOf("settings")
                             .forGetter(CustomFlatLevelSource::settings))
                     .apply(instance, instance.stable(CustomFlatLevelSource::new)));
 
-    public CustomFlatLevelSource(FlatLevelGeneratorSettings settings) {
+    public CustomFlatLevelSource(CustomFlatLevelGeneratorSettings settings) {
         super(settings);
+        this.mySettings = settings;
+    }
+
+    @Override
+    @NotNull
+    public CustomFlatLevelGeneratorSettings settings() {
+        return mySettings;
     }
 
     @Override

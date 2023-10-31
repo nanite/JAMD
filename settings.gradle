@@ -2,6 +2,10 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven {
+            name = 'Neo'
+            url = 'https://maven.neoforged.net/releases'
+        }
+        maven {
             name = 'Creeperhost'
             url = 'https://maven.creeperhost.net/'
         }
