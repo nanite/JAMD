@@ -1,31 +1,18 @@
 package com.unrealdinnerbone.jamd.world;
 
-import com.mojang.datafixers.kinds.Applicative;
-import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.unrealdinnerbone.jamd.JAMD;
+import com.unrealdinnerbone.jamd.util.OreRegistry;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.RegistryCodecs;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
-import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.structure.StructureSet;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings {
@@ -43,15 +30,12 @@ public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings
 
     @Override
     public BiomeGenerationSettings adjustGenerationSettings(Holder<Biome> holder) {
-        if(!holder.equals(this.biome)) {
+        if (!holder.equals(this.biome)) {
             return holder.value().getGenerationSettings();
         }
         BiomeGenerationSettings.PlainBuilder plainBuilder = new BiomeGenerationSettings.PlainBuilder();
-        Optional<ResourceKey<Biome>> biomeResourceKey = this.biome.unwrapKey();
-        if(biomeResourceKey.isPresent()) {
-            for (PlacedFeature registeredFeature : JAMD.REGISTERED_FEATURES.get(biomeResourceKey.get()).values()) {
-                plainBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(registeredFeature));
-            }
+        for (PlacedFeature registeredFeature : OreRegistry.getFeatures(holder)) {
+            plainBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(registeredFeature));
         }
         return plainBuilder.build();
     }

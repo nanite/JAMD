@@ -4,3 +4,4 @@ accessible method net/minecraft/world/level/levelgen/feature/configurations/OreC
 accessible field net/minecraft/world/level/levelgen/placement/HeightRangePlacement height Lnet/minecraft/world/level/levelgen/heightproviders/HeightProvider;
 accessible field net/minecraft/world/level/levelgen/placement/CountPlacement count Lnet/minecraft/util/valueproviders/IntProvider;
 accessible field net/minecraft/world/level/levelgen/heightproviders/ConstantHeight value Lnet/minecraft/world/level/levelgen/VerticalAnchor;
+accessible field net/minecraft/world/level/biome/BiomeGenerationSettings featureSet Ljava/util/function/Supplier;

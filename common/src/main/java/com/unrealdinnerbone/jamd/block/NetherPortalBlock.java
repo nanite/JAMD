@@ -10,14 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public class NetherPortalBlock extends PortalBlock {
 
     public NetherPortalBlock() {
-        super(JAMDRegistry.Keys.NETHER.level(), JAMDRegistry.NETHER);
+        super(JAMDRegistry.NETHER);
     }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return JAMDRegistry.NETHER.blockEntity().get().create(pos, state);
-    }
-
 
 }

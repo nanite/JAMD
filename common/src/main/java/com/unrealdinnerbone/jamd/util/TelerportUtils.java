@@ -2,6 +2,7 @@ package com.unrealdinnerbone.jamd.util;
 
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.jamd.WorldType;
 import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import net.minecraft.core.BlockPos;
@@ -20,12 +21,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class TelerportUtils {
-    public static void teleport(Player playerEntity, ResourceKey<Level> toWorldKey, BlockPos blockPos, JAMDRegistry.RegistrySet registrySet) {
+    public static void teleport(Player playerEntity, ResourceKey<Level> toWorldKey, BlockPos blockPos, WorldType registrySet) {
         ServerLevel toWorld = playerEntity.getServer().getLevel(toWorldKey);
         if (toWorld != null) {
             findPortalLocation(toWorld, blockPos, registrySet).ifPresentOrElse(portalLocation -> {
                         if (toWorld.getBlockState(portalLocation).isAir()) {
-                            toWorld.setBlockAndUpdate(portalLocation, registrySet.block().get().defaultBlockState());
+                            toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
                         }
                         Vec3 portalLocationVec = new Vec3(portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5);
                         Services.PLATFORM.teleport(playerEntity, toWorld, new PortalInfo(portalLocationVec, playerEntity.getDeltaMovement(), playerEntity.getYRot(), playerEntity.getXRot()));                    },
@@ -37,8 +38,8 @@ public class TelerportUtils {
     }
 
 
-    private static Optional<BlockPos> findPortalLocation(Level worldTo, BlockPos fromPos, JAMDRegistry.RegistrySet registrySet) {
-        if (worldTo.getBlockState(fromPos).is(registrySet.block().get()) && isSafeSpawnLocation(worldTo, fromPos)) {
+    private static Optional<BlockPos> findPortalLocation(Level worldTo, BlockPos fromPos, WorldType registrySet) {
+        if (worldTo.getBlockState(fromPos).is(registrySet.getBlock().get()) && isSafeSpawnLocation(worldTo, fromPos)) {
             return Optional.of(fromPos.above());
         }
 
@@ -46,7 +47,7 @@ public class TelerportUtils {
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
                 .map(chunkPos -> worldTo.getChunk(chunkPos.x, chunkPos.z).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
-                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.blockEntity().get()))
+                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlock().get()))
                 .findFirst()
                 .orElseGet(() -> {
                     BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);

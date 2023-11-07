@@ -15,9 +15,9 @@ public class ModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
-        generator.createTrivialCube(JAMDRegistry.OVERWORLD.block().get());
-        generator.createTrivialCube(JAMDRegistry.NETHER.block().get());
-        generator.createTrivialCube(JAMDRegistry.END.block().get());
+        generator.createTrivialCube(JAMDRegistry.OVERWORLD.getBlock().get());
+        generator.createTrivialCube(JAMDRegistry.NETHER.getBlock().get());
+        generator.createTrivialCube(JAMDRegistry.END.getBlock().get());
     }
 
     @Override

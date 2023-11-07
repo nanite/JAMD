@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.jamd.block;
 
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.jamd.WorldType;
 import com.unrealdinnerbone.jamd.block.base.PortalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -10,14 +11,10 @@ import org.jetbrains.annotations.Nullable;
 public class EndPortalBlock extends PortalBlock {
 
     public EndPortalBlock() {
-        super(JAMDRegistry.Keys.END.level(), JAMDRegistry.END);
+        super(JAMDRegistry.END);
     }
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return JAMDRegistry.END.blockEntity().get().create(pos, state);
-    }
+
 
 
 }

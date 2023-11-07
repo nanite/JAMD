@@ -69,7 +69,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
             HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
-            context.register(JAMDRegistry.Keys.END.biome(), new Biome.BiomeBuilder()
+            context.register(JAMDRegistry.END.getKey().biome(), new Biome.BiomeBuilder()
                     .temperature(0.5f)
                     .downfall(0.5f)
                     .hasPrecipitation(false)
@@ -86,7 +86,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         }
 
         static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
-            context.register(JAMDRegistry.Keys.END.dimensionType(), new DimensionType(OptionalLong.of(6000),
+            context.register(JAMDRegistry.END.getKey().dimensionType(), new DimensionType(OptionalLong.of(6000),
                     false,
                     false,
                     false,
@@ -115,10 +115,10 @@ public class JAMDData implements DataGeneratorEntrypoint {
             BiomeDefaultFeatures.addExtraEmeralds(builder);
             builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_COPPER_LARGE);
             builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacements.ORE_TUFF);
-            context.register(JAMDRegistry.Keys.OVERWORLD.biome(), new Biome.BiomeBuilder()
+            context.register(JAMDRegistry.OVERWORLD.getKey().biome(), new Biome.BiomeBuilder()
                     .temperature(1)
                     .downfall(0.4f)
-                    .hasPrecipitation(true)
+                    .hasPrecipitation(false)
                     .temperatureAdjustment(Biome.TemperatureModifier.NONE)
                     .specialEffects(new BiomeSpecialEffects.Builder()
                             .skyColor(8103167)
@@ -132,7 +132,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         }
 
         static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
-            context.register(JAMDRegistry.Keys.OVERWORLD.dimensionType(), new DimensionType(OptionalLong.of(6000),
+            context.register(JAMDRegistry.OVERWORLD.getKey().dimensionType(), new DimensionType(OptionalLong.of(6000),
                     true,
                     false,
                     false,
@@ -158,7 +158,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
             HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
             BiomeDefaultFeatures.addNetherDefaultOres(builder);
-            context.register(JAMDRegistry.Keys.NETHER.biome(), new Biome.BiomeBuilder()
+            context.register(JAMDRegistry.NETHER.getKey().biome(), new Biome.BiomeBuilder()
                     .hasPrecipitation(false)
                     .temperature(2.0F)
                     .downfall(0.0F)
@@ -177,7 +177,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         }
 
         static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
-            context.register(JAMDRegistry.Keys.NETHER.dimensionType(), new DimensionType(OptionalLong.of(18000),
+            context.register(JAMDRegistry.NETHER.getKey().dimensionType(), new DimensionType(OptionalLong.of(18000),
                     false,
                     false,
                     true,

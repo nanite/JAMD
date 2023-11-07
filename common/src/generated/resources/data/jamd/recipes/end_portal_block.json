@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "minecraft:end_stone"
+    },
+    "P": {
+      "item": "minecraft:diamond_pickaxe"
+    }
+  },
+  "pattern": [
+    "OOO",
+    "OPO",
+    "OOO"
+  ],
+  "result": {
+    "item": "jamd:end_portal"
+  },
+  "show_notification": true
+}
