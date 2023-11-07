@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
+import net.minecraft.world.item.CreativeModeTab;
 
 public class ModelProvider extends FabricModelProvider {
 
@@ -14,9 +15,9 @@ public class ModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
-        generator.createTrivialCube(JAMDRegistry.OVERWORLD.block().get());
-        generator.createTrivialCube(JAMDRegistry.NETHER.block().get());
-        generator.createTrivialCube(JAMDRegistry.END.block().get());
+        generator.createTrivialCube(JAMDRegistry.OVERWORLD.getBlock().get());
+        generator.createTrivialCube(JAMDRegistry.NETHER.getBlock().get());
+        generator.createTrivialCube(JAMDRegistry.END.getBlock().get());
     }
 
     @Override

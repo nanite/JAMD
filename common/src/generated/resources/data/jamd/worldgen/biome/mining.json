@@ -36,7 +36,7 @@
       "minecraft:ore_tuff"
     ]
   ],
-  "has_precipitation": true,
+  "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {
     "ambient": [],

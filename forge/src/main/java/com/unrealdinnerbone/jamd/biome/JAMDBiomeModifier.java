@@ -36,92 +36,14 @@ import java.util.regex.Pattern;
 
 public class JAMDBiomeModifier implements BiomeModifier
 {
-
     public static final JAMDBiomeModifier INSTANCE = new JAMDBiomeModifier();
 
-    private static final Logger LOGGER = LogUtils.getLogger();
-    private final List<Pattern> matches;
-    private final boolean dynamicOreAddition;
-
-    private final List<ResourceKey<PlacedFeature>> placedFeatures;
     public JAMDBiomeModifier() {
-        try {
-            dynamicOreAddition = JAMD.CONFIG.getDynamicOreAdditionConfig().getExceptionally();
-            matches = Arrays.stream(JAMD.CONFIG.getBlackListedOresConfig().getExceptionally())
-                    .filter(Objects::nonNull)
-                    .map(Pattern::compile)
-                    .toList();
-            placedFeatures = new ArrayList<>();
-            Arrays.stream(JAMD.CONFIG.getAdditionalOresConfig().getExceptionally())
-                    .filter(Objects::nonNull)
-                    .forEach(resourceLocation -> {
-                        try {
-                            ResourceLocation p135787 = new ResourceLocation(resourceLocation);
-                            ResourceKey<PlacedFeature> key = ResourceKey.create(Registries.PLACED_FEATURE, p135787);
-                            placedFeatures.add(key);
-                        }catch (Exception e) {
-                            LOGGER.error("Failed to create key for {} ", resourceLocation, e);
-                        }
-                    });
-        } catch (ConfigException e) {
-            throw new RuntimeException("Failed to load config", e);
-        }
+
     }
 
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        if(dynamicOreAddition) {
-            if (phase == Phase.ADD) {
-                if(biome.is(JAMDRegistry.Keys.OVERWORLD.biome())) {
-                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
-                    handle(placedFeatureRegistryLookup, builder);
-                }else if(biome.is(JAMDRegistry.Keys.NETHER.biome())) {
-                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
-//                    List<String> strings = JAMD.CONFIG.get().blackListNether();
-                    handle(placedFeatureRegistryLookup, builder);
-                }else if(biome.is(JAMDRegistry.Keys.END.biome())) {
-                    HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup = ServerLifecycleHooks.getCurrentServer().registryAccess().lookup(Registries.PLACED_FEATURE).orElseThrow();
-//                    List<String> strings = JAMD.CONFIG.get().blackListEnd();
-                    handle(placedFeatureRegistryLookup, builder);
-                }
-            }
-        }
-    }
-
-    private void handle(HolderLookup.RegistryLookup<PlacedFeature> placedFeatureRegistryLookup, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-
-
-        for (ResourceKey<PlacedFeature> placedFeature : placedFeatures) {
-            placedFeatureRegistryLookup.get(placedFeature).ifPresent(placedFeature1 -> {
-                List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
-                if (features.stream().noneMatch(holder -> holder.is(placedFeature))) {
-                    LOGGER.debug("Force Adding: " + placedFeature.location());
-                    builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature1);
-                }else {
-                    LOGGER.debug("Skipping Force Added as it already exists: " + placedFeature.location());
-                }
-            });
-        }
-
-        placedFeatureRegistryLookup.listElements().forEach(placedFeature -> {
-            if (!matches(placedFeature.key().location().toString())) {
-                PlacedFeature s = placedFeature.get();
-                boolean isOreFeature = s.feature().get().feature() instanceof OreFeature;
-                if (isOreFeature) {
-                    LOGGER.debug("Adding: " + placedFeature.key().location());
-                    List<Holder<PlacedFeature>> features = builder.getGenerationSettings().getFeatures(GenerationStep.Decoration.UNDERGROUND_ORES);
-                    if (features.stream().noneMatch(holder -> holder.is(placedFeature.key()))) {
-                        builder.getGenerationSettings().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, placedFeature);
-                    }
-                }
-            }else {
-                LOGGER.debug("Blacklisted: " + placedFeature.key().location());
-            }
-        });
-    }
-
-    private boolean matches(String value) {
-        return matches.stream().anyMatch(pattern -> pattern.matcher(value).matches());
 
     }
 

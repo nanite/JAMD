@@ -10,14 +10,7 @@ import org.jetbrains.annotations.Nullable;
 public class OverworldPortalBlock extends PortalBlock {
 
     public OverworldPortalBlock() {
-        super(JAMDRegistry.Keys.OVERWORLD.level(), JAMDRegistry.OVERWORLD);
+        super(JAMDRegistry.OVERWORLD);
     }
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return JAMDRegistry.OVERWORLD.blockEntity().get().create(pos, state);
-    }
-
 
 }

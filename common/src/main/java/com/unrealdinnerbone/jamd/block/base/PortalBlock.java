@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.jamd.block.base;
 
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.jamd.WorldType;
 import com.unrealdinnerbone.jamd.util.TelerportUtils;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import net.minecraft.core.BlockPos;
@@ -29,22 +30,26 @@ public abstract class PortalBlock extends Block implements EntityBlock {
     //Todo CONFIG
     private static final ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
 
-    private final ResourceKey<Level> destinationLevel;
-    private final JAMDRegistry.RegistrySet registrySet;
-    public PortalBlock(ResourceKey<Level> destinationWorld, JAMDRegistry.RegistrySet registrySet) {
+    private final WorldType type;
+    public PortalBlock(WorldType type) {
         super(Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
-        this.destinationLevel = destinationWorld;
-        this.registrySet = registrySet;
+        this.type = type;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return type.getBlockEntity().get().create(pos, state);
     }
 
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!level.isClientSide()) {
-            if(level.dimension().equals(destinationLevel)) {
-                TelerportUtils.teleport(player, OVERWORLD, pos, registrySet);
+            if(level.dimension().equals(type.getKey().level())) {
+                TelerportUtils.teleport(player, OVERWORLD, pos, type);
             }else if(level.dimension().equals(OVERWORLD)) {
-                TelerportUtils.teleport(player, destinationLevel, pos, registrySet);
+                TelerportUtils.teleport(player, type.getKey().level(), pos, type);
             }else {
                 player.displayClientMessage(Component.literal("You can't teleport from this dimension"), true);
             }

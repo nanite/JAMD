@@ -13,6 +13,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -22,6 +24,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;
@@ -37,24 +40,21 @@ public class JAMDRegistry implements IRegistry {
 
     public static final RegistryEntry<Codec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
 
-    public static final RegistrySet OVERWORLD = RegistrySet.of("portal_block", "portal", OverworldPortalBlock::new, OverworldBlockEntity::new);
-    public static final RegistrySet NETHER = RegistrySet.of("nether_portal", NetherPortalBlock::new, NetherBlockEntity::new);
+    public static final WorldType OVERWORLD = of("mining", "portal_block", "portal", OverworldPortalBlock::new, OverworldBlockEntity::new, BiomeTags.IS_OVERWORLD);
 
-    public static final RegistrySet END = RegistrySet.of("end_portal", EndPortalBlock::new, EndBlockEntity::new);
+    public static final WorldType NETHER = of("nether", "nether_portal", "nether_portal", NetherPortalBlock::new, NetherBlockEntity::new, BiomeTags.IS_NETHER);
+
+    public static final WorldType END = of("end", "end_portal", "end_portal", EndPortalBlock::new, EndBlockEntity::new, BiomeTags.IS_END);
 
 
-    public static class Keys {
-        public static final KeySet OVERWORLD = KeySet.of(new ResourceLocation(JAMD.MOD_ID, "mining"));
-
-        public static final KeySet NETHER = KeySet.of(new ResourceLocation(JAMD.MOD_ID, "nether"));
-
-        public static final KeySet END = KeySet.of(new ResourceLocation(JAMD.MOD_ID, "end"));
-
+    private static WorldType of(String name, String blockName, String tileName, Supplier<Block> blockSupplier, BiFunction<BlockPos, BlockState, PortalTileEntity> tileSupplier, TagKey<Biome> biomeTagKey) {
+        RegistryEntry<Block> block = BLOCKS.register(blockName, blockSupplier);
+        return new WorldType(name, block, ITEMS.register(blockName, () -> new BlockItem(block.get(), new Item.Properties())), TILES.register(tileName, () -> Regeneration.createBlockEntityType(tileSupplier, block.get())), biomeTagKey);
     }
 
     @Override
     public void afterRegistered() {
-        Regeneration.addItemsToCreateTab(CreativeTabs.FUNCTIONAL_BLOCKS, List.of(OVERWORLD.item(), NETHER.item(), END.item()));
+        Regeneration.addItemsToCreateTab(CreativeTabs.FUNCTIONAL_BLOCKS, List.of(OVERWORLD.getItem(), NETHER.getItem(), END.getItem()));
     }
 
     @Override
@@ -67,26 +67,5 @@ public class JAMDRegistry implements IRegistry {
         return JAMD.MOD_ID;
     }
 
-    public record RegistrySet(RegistryEntry<Block> block, RegistryEntry<BlockItem> item, RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity) {
 
-        private static RegistrySet of(String name, Supplier<Block> blockSupplier, BiFunction<BlockPos, BlockState, PortalTileEntity> tileSupplier) {
-            return of(name, name, blockSupplier, tileSupplier);
-        }
-
-        @Deprecated
-        @ApiStatus.ScheduledForRemoval(inVersion = "4.0.0")
-        private static RegistrySet of(String blockName, String tileName, Supplier<Block> blockSupplier, BiFunction<BlockPos, BlockState, PortalTileEntity> tileSupplier) {
-            RegistryEntry<Block> block = BLOCKS.register(blockName, blockSupplier);
-            RegistryEntry<BlockItem> itemBlock = ITEMS.register(blockName, () -> new BlockItem(block.get(), new Item.Properties()));
-            RegistryEntry<BlockEntityType<PortalTileEntity>> tile = TILES.register(tileName, () -> Regeneration.createBlockEntityType(tileSupplier, block.get()));
-            return new RegistrySet(block, itemBlock, tile);
-        }
-    }
-
-    public record KeySet(ResourceKey<Level> level, ResourceKey<DimensionType> dimensionType, ResourceKey<Biome> biome) {
-
-        private static KeySet of(ResourceLocation id) {
-            return new KeySet(ResourceKey.create(Registries.DIMENSION, id), ResourceKey.create(Registries.DIMENSION_TYPE, id), ResourceKey.create(Registries.BIOME, id));
-        }
-    }
 }
