@@ -25,7 +25,7 @@ public class TelerportUtils {
         ServerLevel toWorld = playerEntity.getServer().getLevel(toWorldKey);
         if (toWorld != null) {
             findPortalLocation(toWorld, blockPos, registrySet).ifPresentOrElse(portalLocation -> {
-                        if (toWorld.getBlockState(portalLocation).isAir()) {
+                        if (toWorld.getBlockState(portalLocation).isAir() && !toWorld.getBlockState(portalLocation.below()).is(registrySet.getBlock().get())){
                             toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
                         }
                         Vec3 portalLocationVec = new Vec3(portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5);
@@ -43,7 +43,7 @@ public class TelerportUtils {
             return Optional.of(fromPos.above());
         }
 
-        int range = 5;
+        int range = 3;
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
                 .map(chunkPos -> worldTo.getChunk(chunkPos.x, chunkPos.z).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
@@ -60,15 +60,18 @@ public class TelerportUtils {
     }
 
     private static boolean forLocationAround(Level levelTo, BlockPos.MutableBlockPos blockPos, int fromX, int fromZ, int y) {
-        for (int x = fromX - 6; x < fromX + 6; x++) {
-            for (int z = fromZ - 6; z < fromZ + 6; z++) {
+        boolean locationGood = false;
+        for (int x = fromX - 4; x < fromX + 4; x++) {
+            if(locationGood) { break; }
+            for (int z = fromZ - 4; z < fromZ + 4; z++) {
                 blockPos.set(x, y, z);
                 if(isSaveLocation(levelTo, blockPos)) {
-                    return true;
+                    locationGood = true;
+                    break;
                 }
             }
         }
-        return false;
+        return locationGood;
     }
 
     private static boolean isSaveLocation(Level levelTo, BlockPos.MutableBlockPos blockPos) {
