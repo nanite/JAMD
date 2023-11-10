@@ -1,8 +1,4 @@
-### 3.3.0
+### 3.4.1
 
-- Rewrite mod to better support modded / custom ores
-- Added /jamd reload to reload the config
-- Added configs jamd/overworld.json, jamd/nether.json, jamd/end.json
-- Configs now completely controls the world generation
-- Added support for ore multipliers
-- Added Mekanism support
+- Fix Bug with stacking portals
+- Added support for debris
