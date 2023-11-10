@@ -3,6 +3,7 @@ package com.unrealdinnerbone.jamd;
 import com.mojang.logging.LogUtils;
 import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.compact.MinecraftOreCompact;
+import com.unrealdinnerbone.jamd.compact.MinecraftScatteredOre;
 import com.unrealdinnerbone.jamd.util.OreRegistry;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import net.minecraft.server.MinecraftServer;
@@ -19,6 +20,7 @@ public class JAMD {
 
     public static void init() {
         FeatureTypeRegistry.register("minecraft", MinecraftOreCompact::new);
+        FeatureTypeRegistry.register("minecraft", MinecraftScatteredOre::new);
     }
 
     public static void onServerStart(MinecraftServer server) {

@@ -19,7 +19,6 @@ public class JamdCommand {
 
     private static int reload(CommandContext<CommandSourceStack> stackCommandContext) throws CommandSyntaxException {
         OreRegistry.REGISTERED_FEATURES.clear();
-
         stackCommandContext.getSource().sendSuccess(() -> Component.literal("Reloaded Biomes Data"), true);
         return 0;
     }

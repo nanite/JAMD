@@ -1,6 +1,7 @@
 {
+  "biome.jamd.end": "End Mining",
   "biome.jamd.mining": "Mining",
-  "biome.jamd.nether_mining": "Nether Mining",
+  "biome.jamd.nether": "Nether Mining",
   "block.jamd.end_portal": "End Mining Portal",
   "block.jamd.nether_portal": "Nether Mining Portal",
   "block.jamd.portal_block": "Mining Portal",
