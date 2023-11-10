@@ -47,7 +47,7 @@ public class TelerportUtils {
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
                 .map(chunkPos -> worldTo.getChunk(chunkPos.x, chunkPos.z).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
-                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlock().get()))
+                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlockEntity().get()))
                 .findFirst()
                 .orElseGet(() -> {
                     BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);
