@@ -9,6 +9,7 @@ import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -46,6 +47,7 @@ public class WorldType {
     private final Path configPath;
 
     private final TagKey<Biome> biomeTag;
+
     public WorldType(String name, RegistryEntry<Block> block, RegistryEntry<BlockItem> item, RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity, TagKey<Biome> biomeTag) {
         this.name = name;
         this.key = KeySet.of(new ResourceLocation(JAMD.MOD_ID, name));
@@ -107,32 +109,36 @@ public class WorldType {
             for (PlacementModifier modifier : placementModifiers) {
                 DataResult<JsonElement> dataResult = PlacementModifier.CODEC.encodeStart(JsonOps.INSTANCE, modifier);
                 Optional<JsonElement> result = dataResult.result();
-                if(result.isEmpty()) {
+                if (result.isEmpty()) {
                     LOGGER.error("Failed to encode: {}", dataResult.error().get().message());
                 }
             }
-            DataResult<JsonElement> json = PlacedFeature.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, placedFeature);
-            if (json.result().isPresent()) {
-                try {
-                    JsonElement jsonElement = json.result().get();
-                    JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    JsonObject feature = jsonObject.getAsJsonObject("feature");
-                    String featureType = GsonHelper.getAsString(feature, "type");
-                    FeatureTypeRegistry.getFeatureType(featureType).ifPresent(iFeatureTypeCompact -> {
-                        try {
-                            oresCodecs.add(iFeatureTypeCompact.getOreCodec(GsonHelper.getAsJsonObject(feature, "config"), placementModifiers));
-                        }catch (Exception e) {
-                            LOGGER.error("Failed to parse ore", e);
-                        }
-                    });
-                } catch (JsonSyntaxException e) {
-                    LOGGER.error("Skipping ore", e);
-                }
+            //Todo better way to do this
+            if (!placedFeature.feature().is(OreFeatures.ORE_INFESTED)) {
+                DataResult<JsonElement> json = PlacedFeature.DIRECT_CODEC.encodeStart(JsonOps.INSTANCE, placedFeature);
+                if (json.result().isPresent()) {
+                    try {
+                        JsonElement jsonElement = json.result().get();
+                        JsonObject jsonObject = jsonElement.getAsJsonObject();
+                        JsonObject feature = jsonObject.getAsJsonObject("feature");
+                        String featureType = GsonHelper.getAsString(feature, "type");
+                        FeatureTypeRegistry.getFeatureType(featureType).ifPresent(iFeatureTypeCompact -> {
+                            try {
+                                oresCodecs.add(iFeatureTypeCompact.getOreCodec(GsonHelper.getAsJsonObject(feature, "config"), placementModifiers));
+                            } catch (Exception e) {
+                                LOGGER.error("Failed to parse ore", e);
+                            }
+                        });
+                    } catch (JsonSyntaxException e) {
+                        LOGGER.error("Skipping ore", e);
+                    }
 
+                }
             }
+
             DataResult<JsonElement> result = ConfigCodec.CODEC.encodeStart(JsonOps.INSTANCE, new ConfigCodec(1, oresCodecs));
             if (result.result().isPresent()) {
-                if(!Files.exists(JAMD.CONFIG_FOLDER)) {
+                if (!Files.exists(JAMD.CONFIG_FOLDER)) {
                     Files.createDirectories(JAMD.CONFIG_FOLDER);
                 }
                 Files.writeString(configPath, GSON.toJson(result.result().get()));

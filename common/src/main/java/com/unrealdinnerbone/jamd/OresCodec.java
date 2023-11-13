@@ -2,15 +2,13 @@ package com.unrealdinnerbone.jamd;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Optional;
 
-public record OresCodec(int oreSize, float discardChance, List<PlacementModifier> modifiers, List<OreConfiguration.TargetBlockState> targets) {
+public record OresCodec(int oreSize, float discardChance, List<PlacementModifier> modifiers,
+                        List<OreConfiguration.TargetBlockState> targets) {
     public static final Codec<OresCodec> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("ore_size").forGetter(OresCodec::oreSize),
             Codec.FLOAT.fieldOf("discard_on_air_chance").forGetter(OresCodec::discardChance),

@@ -1,5 +1,3 @@
-import dev.nanite.mlp.tasks.SingleOutputJar
-
 plugins {
     id("dev.nanite.mlp") version("0.0.3")
     id("java")
@@ -107,7 +105,7 @@ publishMods {
 
     def curseForgeOptions = curseforgeOptions {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
-        projectId =  project.property("curse_id")
+        projectId = project.property("curse_id")
         minecraftVersions.add("${minecraft_version}")
         requires {
             slug = "trenzalore"

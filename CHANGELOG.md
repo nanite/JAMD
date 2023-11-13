@@ -1,4 +1,4 @@
-### 3.4.1
+### 3.4.2
 
-- Fix Bug with stacking portals
-- Added support for debris
+- Fix Crash on fabric
+- Removed Infested Stone for spawning

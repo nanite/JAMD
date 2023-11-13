@@ -1,9 +1,7 @@
 package com.unrealdinnerbone.jamd.util;
 
 import com.unrealdinnerbone.jamd.JAMD;
-import com.unrealdinnerbone.jamd.JAMDRegistry;
 import com.unrealdinnerbone.jamd.WorldType;
-import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -29,7 +27,8 @@ public class TelerportUtils {
                             toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
                         }
                         Vec3 portalLocationVec = new Vec3(portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5);
-                        Services.PLATFORM.teleport(playerEntity, toWorld, new PortalInfo(portalLocationVec, playerEntity.getDeltaMovement(), playerEntity.getYRot(), playerEntity.getXRot()));                    },
+                        Services.PLATFORM.teleport(playerEntity, toWorld, new PortalInfo(portalLocationVec, playerEntity.getDeltaMovement(), playerEntity.getYRot(), playerEntity.getXRot()));
+                    },
                     () -> playerEntity.displayClientMessage(Component.translatable(JAMD.MOD_ID + ".invalid.pos"), true));
 
         } else {
@@ -51,7 +50,7 @@ public class TelerportUtils {
                 .findFirst()
                 .orElseGet(() -> {
                     BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);
-                    if(forLocationAround(worldTo, heightmapPos.mutable(), fromPos.getX(), fromPos.getZ(), heightmapPos.getY())) {
+                    if (forLocationAround(worldTo, heightmapPos.mutable(), fromPos.getX(), fromPos.getZ(), heightmapPos.getY())) {
                         return heightmapPos;
                     }
                     return null;
@@ -63,7 +62,7 @@ public class TelerportUtils {
         for (int x = fromX - 6; x < fromX + 6; x++) {
             for (int z = fromZ - 6; z < fromZ + 6; z++) {
                 blockPos.set(x, y, z);
-                if(isSaveLocation(levelTo, blockPos)) {
+                if (isSaveLocation(levelTo, blockPos)) {
                     return true;
                 }
             }

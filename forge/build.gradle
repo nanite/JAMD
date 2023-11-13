@@ -22,13 +22,13 @@ repositories {
 
 
 dependencies {
-    implementation (fg.deobf("com.unrealdinnerbone:trenzalore-forge:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}-SNAPSHOT")) {
+    implementation(fg.deobf("com.unrealdinnerbone:trenzalore-forge:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}-SNAPSHOT")) {
         transitive = true
     }
     implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
-    minecraftLibrary ("com.unrealdinnerbone:UnRealConfig-gson:12.3.4")
-    runtimeOnly  fg.deobf("com.sunekaer.mods:ToolKit-forge:3.0.2-build.23+mc1.20.1")
-    runtimeOnly  fg.deobf("dev.architectury:architectury-forge:9.0.8")
+    minecraftLibrary("com.unrealdinnerbone:UnRealConfig-gson:12.3.4")
+    runtimeOnly fg.deobf("com.sunekaer.mods:ToolKit-forge:3.0.2-build.23+mc1.20.1")
+    runtimeOnly fg.deobf("dev.architectury:architectury-forge:9.0.8")
 
 
 }

@@ -12,8 +12,8 @@ public class JamdCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> commandDispatcher) {
         commandDispatcher.register(Commands.literal("jamd")
-                        .then(Commands.literal("reload")
-                                .executes(JamdCommand::reload)));
+                .then(Commands.literal("reload")
+                        .executes(JamdCommand::reload)));
 
     }
 

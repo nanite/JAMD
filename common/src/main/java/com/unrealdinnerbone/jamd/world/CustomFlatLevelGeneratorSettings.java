@@ -19,13 +19,13 @@ public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings
 
     public static final Codec<CustomFlatLevelGeneratorSettings> CODEC = RecordCodecBuilder.create((instance) ->
             instance.group(Biome.CODEC
-                            .fieldOf("biome")
-                            .forGetter(FlatLevelGeneratorSettings::getBiome),
-                    FlatLayerInfo.CODEC.listOf().fieldOf("layers").forGetter(CustomFlatLevelGeneratorSettings::getLayersInfo))
+                                    .fieldOf("biome")
+                                    .forGetter(FlatLevelGeneratorSettings::getBiome),
+                            FlatLayerInfo.CODEC.listOf().fieldOf("layers").forGetter(CustomFlatLevelGeneratorSettings::getLayersInfo))
                     .apply(instance, instance.stable(CustomFlatLevelGeneratorSettings::create)));
 
     public static CustomFlatLevelGeneratorSettings create(Holder<Biome> holder, List<FlatLayerInfo> layersInfo) {
-          return new CustomFlatLevelGeneratorSettings(holder, layersInfo);
+        return new CustomFlatLevelGeneratorSettings(holder, layersInfo);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings
         return plainBuilder.build();
     }
 
-    public CustomFlatLevelGeneratorSettings( Holder<Biome> holder, List<FlatLayerInfo> infos) {
+    public CustomFlatLevelGeneratorSettings(Holder<Biome> holder, List<FlatLayerInfo> infos) {
         super(Optional.empty(), holder, List.of());
         getLayersInfo().clear();
         getLayersInfo().addAll(infos);

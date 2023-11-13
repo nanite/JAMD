@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.unrealdinnerbone.jamd.OresCodec;
 import com.unrealdinnerbone.jamd.api.IFeatureTypeCompact;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.ScatteredOreFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 

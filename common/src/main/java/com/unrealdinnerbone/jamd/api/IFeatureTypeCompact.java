@@ -10,12 +10,11 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
-public interface IFeatureTypeCompact<T>
-{
+public interface IFeatureTypeCompact<T> {
 
     default OresCodec getOreCodec(JsonObject config, List<PlacementModifier> modifiers) throws IllegalArgumentException {
         DataResult<T> parse = getCodec().parse(JsonOps.INSTANCE, config);
-        if(parse.error().isPresent()) {
+        if (parse.error().isPresent()) {
             throw new IllegalArgumentException(parse.error().get().message());
         } else {
             return parse(parse.result().get(), modifiers);
@@ -28,7 +27,7 @@ public interface IFeatureTypeCompact<T>
     Codec<T> getCodec();
 
     /**
-     * @param value the parsed ore config codec
+     * @param value              the parsed ore config codec
      * @param placementModifiers the placement modifiers to create ore codec
      * @return the ore codec
      */

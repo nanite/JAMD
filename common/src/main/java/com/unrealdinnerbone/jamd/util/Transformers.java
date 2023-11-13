@@ -2,14 +2,10 @@ package com.unrealdinnerbone.jamd.util;
 
 import com.unrealdinnerbone.jamd.OresCodec;
 import net.minecraft.core.Holder;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.placement.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class Transformers {
 
