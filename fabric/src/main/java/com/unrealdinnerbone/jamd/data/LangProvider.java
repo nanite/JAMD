@@ -20,5 +20,7 @@ public class LangProvider extends FabricLanguageProvider {
         translationBuilder.add("biome.jamd.mining", "Mining");
         translationBuilder.add("biome.jamd.nether", "Nether Mining");
         translationBuilder.add("biome.jamd.end", "End Mining");
+        translationBuilder.add(JAMDRegistry.OVERWORLD.getAdvancementTitleKey(), "To Infinity and Underground");
+        translationBuilder.add(JAMDRegistry.OVERWORLD.getAdvancementDescriptionKey(), "Enter the Mining Dimension");
     }
 }

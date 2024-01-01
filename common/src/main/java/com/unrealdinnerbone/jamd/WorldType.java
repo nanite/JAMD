@@ -148,6 +148,14 @@ public class WorldType {
         }
     }
 
+    public String getAdvancementTitleKey() {
+        return "advancements." + JAMD.MOD_ID + "." + name + ".title";
+    }
+
+    public String getAdvancementDescriptionKey() {
+        return "advancements." + JAMD.MOD_ID + "." + name + ".description";
+    }
+
 
     public List<PlacedFeature> getFeatures(MinecraftServer server) {
         List<PlacedFeature> features = new ArrayList<>();

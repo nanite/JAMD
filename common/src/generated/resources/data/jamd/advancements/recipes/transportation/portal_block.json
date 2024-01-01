@@ -22,14 +22,13 @@
   },
   "requirements": [
     [
-      "has_diamond_pick",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_diamond_pick"
     ]
   ],
   "rewards": {
     "recipes": [
       "jamd:portal_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

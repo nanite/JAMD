@@ -10,11 +10,11 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings {
 
     public static final Codec<CustomFlatLevelGeneratorSettings> CODEC = RecordCodecBuilder.create((instance) ->
@@ -29,6 +29,7 @@ public class CustomFlatLevelGeneratorSettings extends FlatLevelGeneratorSettings
     }
 
     @Override
+    @NotNull
     public BiomeGenerationSettings adjustGenerationSettings(Holder<Biome> holder) {
         if (!holder.equals(this.biome)) {
             return holder.value().getGenerationSettings();

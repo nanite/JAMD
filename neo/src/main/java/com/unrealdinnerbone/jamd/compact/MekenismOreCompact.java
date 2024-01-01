@@ -1,10 +1,7 @@
-//Todo Add Mekanism Support Back
+//Todo Readd Support
 //package com.unrealdinnerbone.jamd.compact;
 //
-//import com.mojang.serialization.Codec;
 //import com.unrealdinnerbone.jamd.OresCodec;
-//import com.unrealdinnerbone.jamd.api.IFeatureTypeCompact;
-//import mekanism.common.world.ResizableOreFeatureConfig;
 //import net.minecraft.resources.ResourceLocation;
 //import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 //

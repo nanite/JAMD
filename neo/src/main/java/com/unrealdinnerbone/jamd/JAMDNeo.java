@@ -1,23 +1,24 @@
 package com.unrealdinnerbone.jamd;
 
 import com.unrealdinnerbone.jamd.command.JamdCommand;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 @Mod(JAMD.MOD_ID)
-public class JAMDForge {
+public class JAMDNeo {
 
-    public JAMDForge() {
+    public JAMDNeo() {
         JAMD.init();
-        MinecraftForge.EVENT_BUS.addListener(this::onRegisterCommands);
-        MinecraftForge.EVENT_BUS.addListener(this::onStart);
+        NeoForge.EVENT_BUS.addListener(this::onRegisterCommands);
+        NeoForge.EVENT_BUS.addListener(this::onStart);
         registerCompact();
     }
 
     public static void registerCompact() {
-        //Todo register compact
+        //Todo re add compact
 //        FeatureTypeRegistry.register("mekanism", MekenismOreCompact::new);
     }
 

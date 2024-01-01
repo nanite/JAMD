@@ -1,4 +1,3 @@
-### 3.4.2
+### 4.0.0
 
-- Fix Crash on fabric
-- Removed Infested Stone for spawning
+- Updated to 1.20.4

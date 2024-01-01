@@ -1,7 +1,7 @@
-// 1.20.1	2023-08-20T09:33:14.6350463	Just Another Mining Dimension/Recipes
-6a1227f9e0b372e3546b782215347c8c76dd6f4f data\jamd\advancements\recipes\transportation\nether_portal_block.json
-be575abba95e7f591761941b8ce7b15805dd16f5 data\jamd\advancements\recipes\transportation\end_portal_block.json
-64a379634715c9f4ea69b6fc5a330a0008cbb33f data\jamd\recipes\portal_block.json
-351ba1cdc449781ef49cc5cdb4bfdd5bc5722a13 data\jamd\recipes\nether_portal_block.json
-a202bbb60a616a623a317c3b0902f18436701002 data\jamd\recipes\end_portal_block.json
-8be629b04926b089b8c6acc497e9fed86ca0ae1b data\jamd\advancements\recipes\transportation\portal_block.json
+// 1.20.4	2023-12-31T21:15:52.9871834	Just Another Mining Dimension/Recipes
+4d6b8136d5ff79eb4469ecbc72396d94fd25af20 data\jamd\advancements\recipes\transportation\nether_portal_block.json
+20e233e25e1b3488c1d968a1230f04ef41f4e97a data\jamd\advancements\recipes\transportation\end_portal_block.json
+f956a1ca3452cba931d99b28820a4e0e73ad2624 data\jamd\recipes\portal_block.json
+79a197aae235dfbca7663473a2ad3e7483842e94 data\jamd\recipes\nether_portal_block.json
+6893e3a682595a9cf169036ba333467142cab2ff data\jamd\recipes\end_portal_block.json
+98ed8e49a380927bcf6b3bf26ccc62a8389b53e6 data\jamd\advancements\recipes\transportation\portal_block.json

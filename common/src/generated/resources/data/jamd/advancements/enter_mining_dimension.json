@@ -1,0 +1,27 @@
+{
+  "criteria": {
+    "enter_dimension": {
+      "conditions": {
+        "to": "jamd:mining"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.jamd.mining.description"
+    },
+    "icon": {
+      "item": "jamd:portal_block"
+    },
+    "title": {
+      "translate": "advancements.jamd.mining.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_dimension"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

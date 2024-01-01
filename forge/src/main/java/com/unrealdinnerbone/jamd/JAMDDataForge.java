@@ -5,10 +5,11 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.registries.RegistriesDatapackGenerator;
+import net.minecraft.data.registries.RegistryPatchGenerator;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,12 +33,11 @@ public class JAMDDataForge {
         bootstapContext.register(ADD_SELF, JAMDBiomeModifier.INSTANCE);
     }
 
-    private static class BiomeModifiers extends DatapackBuiltinEntriesProvider {
+    private static class BiomeModifiers extends RegistriesDatapackGenerator {
 
         public BiomeModifiers(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-            super(output, registries, builder, Set.of(JAMD.MOD_ID));
+            super(output, RegistryPatchGenerator.createLookup(registries, builder).thenApply(RegistrySetBuilder.PatchedRegistries::patches), Set.of(JAMD.MOD_ID));
         }
     }
-
 
 }

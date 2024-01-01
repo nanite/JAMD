@@ -12,4 +12,4 @@ pluginManagement {
     }
 }
 
-include("common", "fabric", "forge")
+include("common", "neo", "fabric", "forge")

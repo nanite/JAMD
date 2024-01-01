@@ -1,11 +1,10 @@
 plugins {
-    id("dev.nanite.mlp") version("0.0.3")
-    id("java")
-    id "me.modmuss50.mod-publish-plugin" version "0.3.0"
-
-    id("fabric-loom") version("1.4.2") apply(false)
-    id 'net.neoforged.gradle' version '[6.0.18,6.2)' apply(false)
+    id("dev.nanite.mlp") version("0.1.1")
+    id("java-library")
+    id("maven-publish")
+    id("me.modmuss50.mod-publish-plugin") version "0.3.0"
 }
+
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
@@ -13,59 +12,57 @@ multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
     modID.set(project.property("mod_id"))
     splitSources.set(true)
+    convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
-
     dataGen {
         useFabric.set(project(":common").file("src/generated/resources"))
-        useForge.set(project(":forge").file("src/generated/resources"))
     }
-
 }
 
 allprojects {
-    def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
+    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
     version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
-    group = project.property("maven_group")
+    group = "com.unrealdinnerbone"
+
+
 }
 
 subprojects {
-    apply plugin: 'dev.nanite.mlp'
-    apply plugin: 'maven-publish'
 
-    afterEvaluate {
-        project.sourceSets.main.resources.srcDir(project.file('src/generated/resources'))
-    }
+
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'dev.nanite.mlp'
+
+
+    sourceSets.main.resources.srcDir project.file('src/generated/resources')
+
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
 
     base {
-        archivesName = "${mod_name}-${project.name}".toLowerCase()
+        archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
     }
-
-    tasks.withType(ProcessResources).configureEach {
-        outputs.upToDateWhen { false }
-    }
-
     repositories {
-        mavenLocal()
         maven {
             name = "Creeperhost"
             url = uri("https://maven.creeperhost.net/")
         }
         maven {
-            name = "nanite"
-            url = uri("https://maven.nanite.dev/snapshots")
+            name = "Nanite"
+            url = "https://maven.nanite.dev/releases"
         }
-        maven {
-            name = "UnRealDinnerbone"
-            url = "https://maven.unreal.codes/releases"
-        }
+    }
+    tasks.withType(ProcessResources).configureEach {
+        outputs.upToDateWhen { false }
     }
 
     publishing {
         repositories {
             if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
                 maven {
-                    def isSnapshot = providers.environmentVariable('SNAPSHOT').is("true")
+                    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
                     url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
                     credentials {
                         username = "nanite"
@@ -75,12 +72,13 @@ subprojects {
             }
         }
         publications {
-            mavenJava(MavenPublication) {
+            register("mavenJava", MavenPublication) {
                 groupId project.group
                 artifactId project.getArchivesBaseName()
             }
         }
     }
+
 
 }
 
@@ -103,13 +101,17 @@ publishMods {
         modLoaders.add("forge")
     }
 
+    def neoOptions = publishOptions {
+        file = project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
+        displayName = "${project.name} Neo ${mod_version}+mc${minecraft_version}"
+        modLoaders.add("neoforge")
+    }
+
+
     def curseForgeOptions = curseforgeOptions {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
-        projectId = project.property("curse_id")
+        projectId = "${curse_id}"
         minecraftVersions.add("${minecraft_version}")
-        requires {
-            slug = "trenzalore"
-        }
     }
 
     curseforge("curseforgeFabric") {
@@ -123,5 +125,12 @@ publishMods {
         from(curseForgeOptions, forgeOptions)
     }
 
+    curseforge("curseforgeNeoForge") {
+        from(curseForgeOptions, neoOptions)
+    }
+
 }
+
+
+
 

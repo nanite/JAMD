@@ -34,6 +34,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         pack.addProvider(ModelProvider::new);
         pack.addProvider(RecipeProvider::new);
         pack.addProvider(LootTableProvider::new);
+        pack.addProvider(AdvancementProvider::new);
     }
 
     @Override
