@@ -27,3 +27,5 @@ fabric2/run_client/
 fabric/run_client/
 
 logs/
+
+neo/runs/
