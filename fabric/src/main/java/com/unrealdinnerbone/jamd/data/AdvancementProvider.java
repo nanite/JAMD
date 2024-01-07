@@ -30,7 +30,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                                 AdvancementType.TASK,
                                 true,
                                 true,
-                                false
+                                true
                         )
                         .addCriterion("enter_dimension", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(JAMDRegistry.OVERWORLD.getKey().level()))
                 .build(new ResourceLocation(JAMD.MOD_ID, "enter_mining_dimension")));
