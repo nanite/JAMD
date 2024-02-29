@@ -1,5 +1,5 @@
 plugins {
-    id("dev.nanite.mlp") version("0.1.3")
+    id("dev.nanite.mlp") version("0.1.2")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
