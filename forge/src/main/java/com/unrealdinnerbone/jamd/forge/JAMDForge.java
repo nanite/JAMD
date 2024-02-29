@@ -1,5 +1,6 @@
-package com.unrealdinnerbone.jamd;
+package com.unrealdinnerbone.jamd.forge;
 
+import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.command.JamdCommand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -17,8 +18,7 @@ public class JAMDForge {
     }
 
     public static void registerCompact() {
-        //Todo register compact
-//        FeatureTypeRegistry.register("mekanism", MekenismOreCompact::new);
+
     }
 
     public void onRegisterCommands(RegisterCommandsEvent event) {

@@ -1,5 +1,5 @@
 plugins {
-    id("dev.nanite.mlp") version("0.1.1")
+    id("dev.nanite.mlp") version("0.1.3")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
@@ -52,6 +52,10 @@ subprojects {
         maven {
             name = "Nanite"
             url = "https://maven.nanite.dev/releases"
+        }
+        maven {
+            name = "Nanite"
+            url = "https://maven.blamejared.com/"
         }
     }
     tasks.withType(ProcessResources).configureEach {

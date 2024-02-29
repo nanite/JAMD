@@ -1,5 +1,6 @@
-package com.unrealdinnerbone.jamd;
+package com.unrealdinnerbone.jamd.fabric;
 
+import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.command.JamdCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;

@@ -1,3 +1,3 @@
-### 4.0.1
+### 4.1.0
 
-- Fix Dependencies
+- Add Support for Mekanism and Immersive Engineering ores

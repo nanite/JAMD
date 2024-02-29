@@ -4,19 +4,8 @@ multiLoader.forge() {
 
 publishing.publications.mavenJava.artifact jar
 
-repositories {
-    maven {
-        url "https://cursemaven.com"
-    }
-    maven {
-        url "https://maven.nanite.dev/releases"
-    }
-}
-
-
 dependencies {
     implementation(fg.deobf("com.unrealdinnerbone:trenzalore-forge:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")) {
         transitive = true
     }
-//    implementation fg.deobf("mekanism:Mekanism:${mekanism_version}")
 }
