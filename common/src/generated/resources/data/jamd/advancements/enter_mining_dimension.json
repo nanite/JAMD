@@ -11,6 +11,7 @@
     "description": {
       "translate": "advancements.jamd.mining.description"
     },
+    "hidden": true,
     "icon": {
       "item": "jamd:portal_block"
     },

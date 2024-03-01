@@ -1,3 +1,3 @@
-### 4.1.0
+### 4.2.0
 
-- Add Support for Mekanism and Immersive Engineering ores
+- Rewrite Features to support complex features

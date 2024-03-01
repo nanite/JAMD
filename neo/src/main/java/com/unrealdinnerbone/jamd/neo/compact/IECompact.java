@@ -11,20 +11,11 @@ import java.util.List;
 
 public class IECompact implements IFeatureTypeCompact<IEOreFeature.IEOreFeatureConfig> {
 
-    private static final ResourceLocation LOCATION = new ResourceLocation("immersiveengineering", "ie_ore");
-    @Override
-    public Codec<IEOreFeature.IEOreFeatureConfig> getCodec() {
-        return IEOreFeature.IEOreFeatureConfig.CODEC;
-    }
+    public static final ResourceLocation ID = new ResourceLocation("immersiveengineering", "ie_ore");
 
     @Override
     public OresCodec parse(IEOreFeature.IEOreFeatureConfig value, List<PlacementModifier> placementModifiers) {
         return new OresCodec(value.getSize(), (float) value.getAirExposure(), placementModifiers, value.targetList());
-    }
-
-    @Override
-    public ResourceLocation getFeatureType() {
-        return LOCATION;
     }
 
 

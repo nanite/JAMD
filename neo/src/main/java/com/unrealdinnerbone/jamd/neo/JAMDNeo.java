@@ -21,8 +21,8 @@ public class JAMDNeo {
     }
 
     public static void registerCompact() {
-        FeatureTypeRegistry.register("mekanism", MekenismOreCompact::new);
-        FeatureTypeRegistry.register("immersiveengineering", IECompact::new);
+        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
+        FeatureTypeRegistry.register("immersiveengineering", "ie_ore", IECompact::new);
     }
 
     public void onRegisterCommands(RegisterCommandsEvent event) {

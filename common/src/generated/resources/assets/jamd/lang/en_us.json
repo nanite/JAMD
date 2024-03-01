@@ -7,6 +7,7 @@
   "block.jamd.end_portal": "End Mining Portal",
   "block.jamd.nether_portal": "Nether Mining Portal",
   "block.jamd.portal_block": "Mining Portal",
+  "jamd.argument.world_type.invalid": "Invalid World Type '%s'",
   "jamd.invalid.pos": "Unable to find valid portal location",
   "jamd.invalid.world": "Unable to find world '%s'"
 }

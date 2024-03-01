@@ -9,8 +9,8 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class Transformers {
 
-    public static PlacedFeature fromConfigCodec(OresCodec oresCodec) {
-        ConfiguredFeature<OreConfiguration, Feature<OreConfiguration>> oreFeature = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(oresCodec.targets(), oresCodec.oreSize(), oresCodec.discardChance()));
+    public static PlacedFeature fromConfigCodec(OresCodec oresCodec, boolean ignoreAirChance) {
+        ConfiguredFeature<OreConfiguration, Feature<OreConfiguration>> oreFeature = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(oresCodec.targets(), oresCodec.oreSize(), ignoreAirChance ? 0 : oresCodec.discardChance()));
         return new PlacedFeature(Holder.direct(oreFeature), oresCodec.modifiers());
     }
 }

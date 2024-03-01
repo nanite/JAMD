@@ -52,7 +52,7 @@ public class OreRegistry {
                     ConfigCodec configCodec = result.get();
                     for (int i = 0; i < configCodec.oreMultiplier(); i++) {
                         for (OresCodec ore : configCodec.ores()) {
-                            features.add(Transformers.fromConfigCodec(ore));
+                            features.add(Transformers.fromConfigCodec(ore, configCodec.ignoreAirChance()));
                         }
                     }
                     REGISTERED_FEATURES.put(type, features);

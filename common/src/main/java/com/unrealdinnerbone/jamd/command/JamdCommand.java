@@ -27,12 +27,13 @@ public class JamdCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> commandDispatcher) {
         commandDispatcher.register(Commands.literal("jamd")
-                        .then(Commands.literal("export")
-                                .then(Commands.argument("type", StringArgumentType.string())
-                                        .suggests((context, builder) -> SharedSuggestionProvider.suggest(WorldType.TYPES.stream().map(WorldType::getName), builder))
-                                        .executes(JamdCommand::export)
+                .requires((commandSourceStack) -> commandSourceStack.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .then(Commands.literal("export")
+                        .then(Commands.argument("type", StringArgumentType.string())
+                                .suggests((context, builder) -> SharedSuggestionProvider.suggest(WorldType.TYPES.stream().map(WorldType::getName), builder))
+                                .executes(JamdCommand::export)))
                 .then(Commands.literal("reload")
-                        .executes(JamdCommand::reload)))));
+                        .executes(JamdCommand::reload)));
 
     }
 
