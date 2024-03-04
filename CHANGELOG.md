@@ -1,3 +1,4 @@
-### 4.2.0
+### 4.2.2
 
-- Rewrite Features to support complex features
+- Add Place Feature blacklist tag
+- Changed the nether portal recipe to diamond pick instead of nettherite

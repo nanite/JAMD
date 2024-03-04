@@ -10,7 +10,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -45,7 +44,9 @@ public class WorldType {
     private final RegistryEntry<BlockItem> item;
     private final RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity;
 
-    private final TagKey<ConfiguredFeature<?, ?>> ingoredFeatures;
+    private final TagKey<ConfiguredFeature<?, ?>> ingoredConfigFeatures;
+
+    private final TagKey<PlacedFeature> ingoredPlaceFeatures;
     private final Path configPath;
 
     private final TagKey<Biome> biomeTag;
@@ -57,7 +58,8 @@ public class WorldType {
         this.item = item;
         this.blockEntity = blockEntity;
         this.biomeTag = biomeTag;
-        this.ingoredFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(JAMD.MOD_ID, name));
+        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(JAMD.MOD_ID, name));
+        this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(JAMD.MOD_ID, name));
         this.configPath = JAMD.CONFIG_FOLDER.resolve(name + ".json");
         TYPES.add(this);
     }
@@ -79,7 +81,11 @@ public class WorldType {
     }
 
     public TagKey<ConfiguredFeature<?, ?>> getIgnoredFeatures() {
-        return ingoredFeatures;
+        return ingoredConfigFeatures;
+    }
+
+    public TagKey<PlacedFeature> getIgnoredPlaceFeatures() {
+        return ingoredPlaceFeatures;
     }
 
     @Override
@@ -113,7 +119,10 @@ public class WorldType {
         List<OresCodec> oresCodecs = new ArrayList<>();
         List<PlacedFeature> placedFeatures = getFeatures(server);
         for (PlacedFeature placedFeature : placedFeatures) {
-            if (!placedFeature.feature().is(ingoredFeatures)) {
+
+            boolean b = server.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
+
+            if (!b && !placedFeature.feature().is(ingoredConfigFeatures)) {
                 RegistryAccess.Frozen frozen = server.registryAccess();
                 ConfiguredFeature<?, ?> configuredFeatureReference = placedFeature.feature().value();
                 Feature<?> feature1 = configuredFeatureReference.feature();

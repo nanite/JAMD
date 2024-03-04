@@ -34,7 +34,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                 .pattern("OOO")
                 .define('O', Blocks.NETHER_BRICKS)
                 .define('P', Items.NETHERITE_PICKAXE)
-                .unlockedBy("has_diamond_pick", has(Items.NETHERITE_PICKAXE))
+                .unlockedBy("has_diamond_pick", has(Items.DIAMOND_PICKAXE))
                 .save(exporter, new ResourceLocation(JAMD.MOD_ID, "nether_portal_block"));
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.END.getBlock().get())
                 .pattern("OOO")
