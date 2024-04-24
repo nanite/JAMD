@@ -8,20 +8,24 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.ChangeDimensionTrigger;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.advancements.packs.VanillaStoryAdvancements;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
 
-    protected AdvancementProvider(FabricDataOutput output) {
-        super(output);
+    protected AdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(output, registryLookup);
     }
 
     @Override
-    public void generateAdvancement(Consumer<AdvancementHolder> consumer) {
+    public void generateAdvancement(HolderLookup.Provider lookup, Consumer<AdvancementHolder> consumer) {
         consumer.accept(Advancement.Builder.advancement()
+                        .parent(new ResourceLocation("minecraft", "story/mine_diamond"))
                         .display(
                                 JAMDRegistry.OVERWORLD.getItem().get(),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementTitleKey()),

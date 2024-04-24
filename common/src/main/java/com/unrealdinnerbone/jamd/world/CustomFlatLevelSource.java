@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.jamd.world;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
@@ -10,7 +11,7 @@ public class CustomFlatLevelSource extends FlatLevelSource {
 
     private final CustomFlatLevelGeneratorSettings mySettings;
 
-    public static final Codec<CustomFlatLevelSource> CODEC = RecordCodecBuilder.create((instance) ->
+    public static final MapCodec<CustomFlatLevelSource> CODEC = RecordCodecBuilder.mapCodec((instance) ->
             instance.group(CustomFlatLevelGeneratorSettings.CODEC
                             .fieldOf("settings")
                             .forGetter(CustomFlatLevelSource::settings))
@@ -28,7 +29,7 @@ public class CustomFlatLevelSource extends FlatLevelSource {
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> codec() {
+    protected MapCodec<? extends ChunkGenerator> codec() {
         return CODEC;
     }
 

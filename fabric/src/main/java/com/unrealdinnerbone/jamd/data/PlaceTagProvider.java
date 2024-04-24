@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import java.util.concurrent.CompletableFuture;
 
 public class PlaceTagProvider extends FabricTagProvider<PlacedFeature> {
+
     public PlaceTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.PLACED_FEATURE, registriesFuture);
     }

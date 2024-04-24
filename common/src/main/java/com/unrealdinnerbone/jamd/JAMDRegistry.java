@@ -2,6 +2,7 @@ package com.unrealdinnerbone.jamd;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.unrealdinnerbone.jamd.block.*;
 import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.jamd.world.CustomFlatLevelSource;
@@ -34,9 +35,9 @@ public class JAMDRegistry implements IRegistry {
     private static final RegistryObjects<Block> BLOCKS = Regeneration.create(Registries.BLOCK);
     private static final RegistryObjects<Item> ITEMS = Regeneration.create(Registries.ITEM);
     private static final RegistryObjects<BlockEntityType<?>> TILES = Regeneration.create(Registries.BLOCK_ENTITY_TYPE);
-    private static final RegistryObjects<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = Regeneration.create(Registries.CHUNK_GENERATOR);
+    private static final RegistryObjects<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS = Regeneration.create(Registries.CHUNK_GENERATOR);
 
-    public static final RegistryEntry<Codec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
+    public static final RegistryEntry<MapCodec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
 
     public static final WorldType OVERWORLD = of("mining", "portal_block", "portal", OverworldPortalBlock::new, OverworldBlockEntity::new, BiomeTags.IS_OVERWORLD);
 

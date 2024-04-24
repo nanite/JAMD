@@ -1,4 +1,3 @@
-### 4.2.2
+### 5.0.0
 
-- Add Place Feature blacklist tag
-- Changed the nether portal recipe to diamond pick instead of nettherite
+- Updated to 1.20.5

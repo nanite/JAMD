@@ -1,4 +1,5 @@
 {
+  "parent": "minecraft:story/mine_diamond",
   "criteria": {
     "enter_dimension": {
       "conditions": {
@@ -13,7 +14,8 @@
     },
     "hidden": true,
     "icon": {
-      "item": "jamd:portal_block"
+      "count": 1,
+      "id": "jamd:portal_block"
     },
     "title": {
       "translate": "advancements.jamd.mining.title"

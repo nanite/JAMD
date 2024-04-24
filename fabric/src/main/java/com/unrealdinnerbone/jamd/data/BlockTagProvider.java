@@ -21,10 +21,5 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(JAMDRegistry.OVERWORLD.getBlock().get())
                 .add(JAMDRegistry.NETHER.getBlock().get())
                 .add(JAMDRegistry.END.getBlock().get());
-        getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
-                .add(JAMDRegistry.OVERWORLD.getBlock().get())
-                .add(JAMDRegistry.NETHER.getBlock().get())
-                .add(JAMDRegistry.END.getBlock().get());
-
     }
 }

@@ -17,4 +17,4 @@ pluginManagement {
         id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
     }
 
-include("common", "neo", "fabric", "forge")
+include("common", "neo", "fabric")

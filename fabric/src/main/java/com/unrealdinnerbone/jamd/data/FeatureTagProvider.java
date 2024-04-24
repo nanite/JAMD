@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import java.util.concurrent.CompletableFuture;
 
 public class FeatureTagProvider extends FabricTagProvider<ConfiguredFeature<?, ?>> {
+
     public FeatureTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.CONFIGURED_FEATURE, registriesFuture);
     }

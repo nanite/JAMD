@@ -7,7 +7,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.sounds.Musics;
@@ -45,20 +45,20 @@ public class JAMDData implements DataGeneratorEntrypoint {
         registryBuilder.add(Registries.BIOME, this::bootstrapBiomes);
     }
 
-    private void bootstrapBiomes(BootstapContext<Biome> context) {
+    private void bootstrapBiomes(BootstrapContext<Biome> context) {
         Overworld.bootstrapBiome(context);
         Nether.bootstrapBiome(context);
         End.bootstrapBiome(context);
     }
 
-    private void bootstrapDimensionTypes(BootstapContext<DimensionType> context) {
+    private void bootstrapDimensionTypes(BootstrapContext<DimensionType> context) {
         Overworld.bootstrapDimensionType(context);
         Nether.bootstrapDimensionType(context);
         End.bootstrapDimensionType(context);
     }
 
     public static class End {
-        static void bootstrapBiome(BootstapContext<Biome> context) {
+        static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
             HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
@@ -78,7 +78,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     .build());
         }
 
-        static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
+        static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
             context.register(JAMDRegistry.END.getKey().dimensionType(), new DimensionType(OptionalLong.of(6000),
                     false,
                     false,
@@ -100,7 +100,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
     }
 
     public static class Overworld {
-        static void bootstrapBiome(BootstapContext<Biome> context) {
+        static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
             HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
@@ -124,7 +124,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     .build());
         }
 
-        static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
+        static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
             context.register(JAMDRegistry.OVERWORLD.getKey().dimensionType(), new DimensionType(OptionalLong.of(6000),
                     true,
                     false,
@@ -146,7 +146,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
     }
 
     public static class Nether {
-        static void bootstrapBiome(BootstapContext<Biome> context) {
+        static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
             HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
@@ -169,7 +169,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     .build());
         }
 
-        static void bootstrapDimensionType(BootstapContext<DimensionType> context) {
+        static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
             context.register(JAMDRegistry.NETHER.getKey().dimensionType(), new DimensionType(OptionalLong.of(18000),
                     false,
                     false,

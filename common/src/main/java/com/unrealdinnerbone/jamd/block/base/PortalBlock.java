@@ -27,7 +27,7 @@ public abstract class PortalBlock extends Block implements EntityBlock {
     private final WorldType type;
 
     public PortalBlock(WorldType type) {
-        super(Properties.of().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
+        super(Properties.of().strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
         this.type = type;
     }
 
@@ -37,9 +37,8 @@ public abstract class PortalBlock extends Block implements EntityBlock {
         return type.getBlockEntity().get().create(pos, state);
     }
 
-
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hand) {
         if (!level.isClientSide()) {
             if (level.dimension().equals(type.getKey().level())) {
                 TelerportUtils.teleport(player, OVERWORLD, pos, type);
