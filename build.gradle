@@ -108,11 +108,11 @@ publishMods {
         modLoaders.add("fabric")
     }
 
-    def forgeOptions = publishOptions {
-        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
-        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
-        modLoaders.add("forge")
-    }
+//    def forgeOptions = publishOptions {
+//        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
+//        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
+//        modLoaders.add("forge")
+//    }
 
     def neoOptions = publishOptions {
         file = project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
@@ -137,9 +137,9 @@ publishMods {
         }
     }
 
-    curseforge("curseforgeForge") {
-        from(curseForgeOptions, forgeOptions)
-    }
+//    curseforge("curseforgeForge") {
+//        from(curseForgeOptions, forgeOptions)
+//    }
 
     curseforge("curseforgeNeoForge") {
         from(curseForgeOptions, neoOptions)
