@@ -6,6 +6,7 @@ import com.mojang.serialization.JsonOps;
 import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
+import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -53,13 +54,13 @@ public class WorldType {
 
     public WorldType(String name, RegistryEntry<Block> block, RegistryEntry<BlockItem> item, RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity, TagKey<Biome> biomeTag) {
         this.name = name;
-        this.key = KeySet.of(new ResourceLocation(JAMD.MOD_ID, name));
+        this.key = KeySet.of(RLUtils.rl(JAMD.MOD_ID, name));
         this.block = block;
         this.item = item;
         this.blockEntity = blockEntity;
         this.biomeTag = biomeTag;
-        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(JAMD.MOD_ID, name));
-        this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, new ResourceLocation(JAMD.MOD_ID, name));
+        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
+        this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
         this.configPath = JAMD.CONFIG_FOLDER.resolve(name + ".json");
         TYPES.add(this);
     }

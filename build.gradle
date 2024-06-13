@@ -1,10 +1,8 @@
 plugins {
-    id("dev.nanite.mlp") version("0.1.8")
+    id("dev.nanite.mlp") version("0.1.10")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
-//    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.0'
-
 }
 
 
@@ -14,8 +12,8 @@ multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
     modID.set(project.property("mod_id"))
     splitSources.set(true)
-    convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
+
     dataGen {
         useFabric.set(project(":common").file("src/generated/resources"))
     }
@@ -27,15 +25,8 @@ allprojects {
     setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
     group = "com.unrealdinnerbone"
 
-//
-//    idea {
-//        module {
-//            downloadSources = true
-//            downloadJavadoc = true
-//        }
-//    }
-}
 
+}
 
 subprojects {
 
@@ -55,20 +46,24 @@ subprojects {
     }
     repositories {
         maven {
-            name = "Creeperhost"
-            url = uri("https://maven.creeperhost.net/")
+            name = "NeoForge"
+            url = "https://maven.neoforged.net/"
+        }
+        maven {
+            name = "Fabric"
+            url = "https://maven.fabricmc.net/"
         }
         maven {
             name = "Nanite"
             url = "https://maven.nanite.dev/releases"
         }
-        maven {
-            name = "Nanite"
-            url = "https://maven.blamejared.com/"
-        }
     }
     tasks.withType(ProcessResources).configureEach {
         outputs.upToDateWhen { false }
+    }
+
+    test {
+        enabled = false
     }
 
     publishing {
@@ -108,12 +103,6 @@ publishMods {
         modLoaders.add("fabric")
     }
 
-//    def forgeOptions = publishOptions {
-//        file = project.provider { project(":forge").tasks.jar }.flatMap { it.archiveFile }
-//        displayName = "${project.name} Forge ${mod_version}+mc${minecraft_version}"
-//        modLoaders.add("forge")
-//    }
-
     def neoOptions = publishOptions {
         file = project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
         displayName = "${project.name} Neo ${mod_version}+mc${minecraft_version}"
@@ -136,10 +125,6 @@ publishMods {
             slug = "fabric-api"
         }
     }
-
-//    curseforge("curseforgeForge") {
-//        from(curseForgeOptions, forgeOptions)
-//    }
 
     curseforge("curseforgeNeoForge") {
         from(curseForgeOptions, neoOptions)

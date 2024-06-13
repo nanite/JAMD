@@ -43,7 +43,7 @@ public class OreRegistry {
                 JsonElement parse = new JsonParser().parse(jsonString);
                 DataResult<ConfigCodec> data = ConfigCodec.CODEC.parse(JsonOps.INSTANCE, parse);
                 if (data.error().isPresent()) {
-                    LOGGER.error("Failed to parse config: {}", data.error().get().message());
+                    LOGGER.error("Failed to parse ConfigCodec json: {}", data.error().get().message());
                     return Collections.emptyList();
                 }
                 Optional<ConfigCodec> result = data.result();

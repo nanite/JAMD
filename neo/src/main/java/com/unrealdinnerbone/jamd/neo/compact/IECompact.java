@@ -11,7 +11,7 @@
 //
 //public class IECompact implements IFeatureTypeCompact<IEOreFeature.IEOreFeatureConfig> {
 //
-//    public static final ResourceLocation ID = new ResourceLocation("immersiveengineering", "ie_ore");
+//    public static final ResourceLocation ID = RLUtils.rl("immersiveengineering", "ie_ore");
 //
 //    @Override
 //    public OresCodec parse(IEOreFeature.IEOreFeatureConfig value, List<PlacementModifier> placementModifiers) {

@@ -2,6 +2,7 @@ package com.unrealdinnerbone.jamd.data;
 
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
@@ -25,7 +26,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
     @Override
     public void generateAdvancement(HolderLookup.Provider lookup, Consumer<AdvancementHolder> consumer) {
         consumer.accept(Advancement.Builder.advancement()
-                        .parent(new ResourceLocation("minecraft", "story/mine_diamond"))
+                        .parent(RLUtils.rl("minecraft", "story/mine_diamond"))
                         .display(
                                 JAMDRegistry.OVERWORLD.getItem().get(),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementTitleKey()),
@@ -37,6 +38,6 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                                 true
                         )
                         .addCriterion("enter_dimension", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(JAMDRegistry.OVERWORLD.getKey().level()))
-                .build(new ResourceLocation(JAMD.MOD_ID, "enter_mining_dimension")));
+                .build(RLUtils.rl(JAMD.MOD_ID, "enter_mining_dimension")));
     }
 }

@@ -1,6 +1,7 @@
 package com.unrealdinnerbone.jamd.api;
 
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
+import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ public class FeatureTypeRegistry {
     public static final Map<ResourceLocation, IFeatureTypeCompact<?>> FEATURES = new HashMap<>();
 
     public static void register(String modId, String id, Supplier<IFeatureTypeCompact<?>> featureTypeCompact) {
-        register(modId, new ResourceLocation(modId, id), featureTypeCompact);
+        register(modId, RLUtils.rl(modId, id), featureTypeCompact);
     }
     public static void register(String modId, ResourceLocation id, Supplier<IFeatureTypeCompact<?>> featureTypeCompact) {
         if (Services.PLATFORM.isModLoaded(modId)) {

@@ -5,6 +5,8 @@ import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.compact.minecraft.MinecraftOreCompact;
 import com.unrealdinnerbone.jamd.util.OreRegistry;
 import com.unrealdinnerbone.trenzalore.api.platform.Services;
+import com.unrealdinnerbone.trenzalore.lib.RLUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 
@@ -32,5 +34,11 @@ public class JAMD {
             }
         }
     }
+
+
+    public static ResourceLocation rl(String value) {
+        return RLUtils.rl(MOD_ID, value);
+    }
+
 
 }
