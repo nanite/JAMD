@@ -57,6 +57,11 @@ subprojects {
             name = "Nanite"
             url = "https://maven.nanite.dev/releases"
         }
+        maven {
+            name = "Mek"
+            url = 'https://modmaven.dev/'
+        }
+
     }
     tasks.withType(ProcessResources).configureEach {
         outputs.upToDateWhen { false }

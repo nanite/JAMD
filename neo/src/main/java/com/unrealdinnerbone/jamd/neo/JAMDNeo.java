@@ -1,7 +1,9 @@
 package com.unrealdinnerbone.jamd.neo;
 
 import com.unrealdinnerbone.jamd.JAMD;
+import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.command.JamdCommand;
+import com.unrealdinnerbone.jamd.neo.compact.MekenismOreCompact;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -18,7 +20,7 @@ public class JAMDNeo {
     }
 
     public static void registerCompact() {
-//        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
+        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
 //        FeatureTypeRegistry.register("immersiveengineering", "ie_ore", IECompact::new);
     }
 
