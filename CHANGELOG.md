@@ -1,3 +1,3 @@
-### 6.0.1
+### 6.0.2
 
-- Re add Mekanism Support
+- Don't hard crash on invalid codecs and print more erros 

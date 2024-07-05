@@ -145,14 +145,25 @@ public class WorldType {
                 });
             }
 
-            DataResult<JsonElement> result = ConfigCodec.CODEC.encodeStart(JsonOps.INSTANCE, new ConfigCodec(1, false, oresCodecs));
+            List<OresCodec> workedOres = new ArrayList<>();
+
+            for (OresCodec oresCodec : oresCodecs) {
+                DataResult<JsonElement> jsonElementDataResult = OresCodec.CODEC.encodeStart(JsonOps.INSTANCE, oresCodec);
+                if(jsonElementDataResult.result().isPresent()) {
+                    workedOres.add(oresCodec);
+                }else {
+                    LOGGER.error("Failed to encode: {}", jsonElementDataResult.error().get());
+                }
+            }
+
+            DataResult<JsonElement> result = ConfigCodec.CODEC.encodeStart(JsonOps.INSTANCE, new ConfigCodec(1, false, workedOres));
             if (result.result().isPresent()) {
                 if (!Files.exists(JAMD.CONFIG_FOLDER)) {
                     Files.createDirectories(JAMD.CONFIG_FOLDER);
                 }
                 Files.writeString(configPath, GSON.toJson(result.result().get()));
             } else {
-                throw new IllegalStateException(result.error().get().message());
+                LOGGER.error("Failed to load config: {}", result.error().get());
             }
         }
     }
