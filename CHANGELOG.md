@@ -1,3 +1,3 @@
-### 6.0.2
+### 6.0.3
 
-- Don't hard crash on invalid codecs and print more erros 
+- Add lang keys
