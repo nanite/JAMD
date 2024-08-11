@@ -1,13 +1,21 @@
+plugins {
+    id 'multiloader'
+}
+
 multiLoader.neo() {
     neoVersion.set("${neo_version}")
 }
+
+publishing.publications.mavenJava.from components.java
+
+sourceSets.main.resources { srcDir project(":common").file('src/generated/resources') }
+
 
 dependencies {
     implementation("com.unrealdinnerbone:trenzalore-neo:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
 
     api "mekanism:Mekanism:${mekanism_version}"
+    api "curse.maven:productivebees-377897:5611632"
 //    api "blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineering_version}"
 }
-
-publishing.publications.mavenJava.from components.java
 

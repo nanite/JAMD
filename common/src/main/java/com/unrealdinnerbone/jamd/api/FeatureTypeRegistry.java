@@ -13,9 +13,14 @@ public class FeatureTypeRegistry {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final Map<ResourceLocation, IFeatureTypeCompact<?>> FEATURES = new HashMap<>();
 
+    public static void register(String modId, List<String> ids, Supplier<IFeatureTypeCompact<?>> featureTypeCompact) {
+        ids.forEach(id -> register(modId, id, featureTypeCompact));
+    }
+
     public static void register(String modId, String id, Supplier<IFeatureTypeCompact<?>> featureTypeCompact) {
         register(modId, RLUtils.rl(modId, id), featureTypeCompact);
     }
+
     public static void register(String modId, ResourceLocation id, Supplier<IFeatureTypeCompact<?>> featureTypeCompact) {
         if (Services.PLATFORM.isModLoaded(modId)) {
             IFeatureTypeCompact<?> iFeatureTypeCompact = featureTypeCompact.get();

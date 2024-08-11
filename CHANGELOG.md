@@ -1,3 +1,3 @@
-### 6.0.3
+### 6.1.0
 
-- Add lang keys
+- 1.21.1 & Bee Compact

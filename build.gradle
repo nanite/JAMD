@@ -1,8 +1,9 @@
 plugins {
-    id("dev.nanite.mlp") version("0.1.10")
+    id("dev.nanite.mlp") version("0.3.0")
     id("java-library")
     id("maven-publish")
     id("me.modmuss50.mod-publish-plugin") version "0.3.0"
+    id 'org.jetbrains.gradle.plugin.idea-ext' version '1.0'
 }
 
 
@@ -12,87 +13,12 @@ multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
     modID.set(project.property("mod_id"))
     splitSources.set(true)
+    convertAccessWidener.set(true)
     accessWidenerFile.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
-
+    group.set(project.property("maven_group"))
     dataGen {
         useFabric.set(project(":common").file("src/generated/resources"))
     }
-}
-
-allprojects {
-    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-    version = "${mod_version}+mc${minecraft_version}${isSnapshot ? '-SNAPSHOT' : ''}"
-    setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
-    group = "com.unrealdinnerbone"
-
-
-}
-
-subprojects {
-
-
-    apply plugin: 'java-library'
-    apply plugin: 'maven-publish'
-    apply plugin: 'dev.nanite.mlp'
-
-
-    sourceSets.main.resources.srcDir project.file('src/generated/resources')
-
-    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-
-
-    base {
-        archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
-    }
-    repositories {
-        maven {
-            name = "NeoForge"
-            url = "https://maven.neoforged.net/"
-        }
-        maven {
-            name = "Fabric"
-            url = "https://maven.fabricmc.net/"
-        }
-        maven {
-            name = "Nanite"
-            url = "https://maven.nanite.dev/releases"
-        }
-        maven {
-            name = "Mek"
-            url = 'https://modmaven.dev/'
-        }
-
-    }
-    tasks.withType(ProcessResources).configureEach {
-        outputs.upToDateWhen { false }
-    }
-
-    test {
-        enabled = false
-    }
-
-    publishing {
-        repositories {
-            if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
-                maven {
-                    def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
-                    url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
-                    credentials {
-                        username = "nanite"
-                        password = providers.environmentVariable("NANITE_TOKEN").get()
-                    }
-                }
-            }
-        }
-        publications {
-            register("mavenJava", MavenPublication) {
-                groupId project.group
-                artifactId project.getArchivesBaseName()
-            }
-        }
-    }
-
-
 }
 
 
@@ -108,6 +34,7 @@ publishMods {
         modLoaders.add("fabric")
     }
 
+
     def neoOptions = publishOptions {
         file = project.provider { project(":neo").tasks.jar }.flatMap { it.archiveFile }
         displayName = "${project.name} Neo ${mod_version}+mc${minecraft_version}"
@@ -119,9 +46,6 @@ publishMods {
         accessToken = providers.environmentVariable("CURSE_TOKEN")
         projectId = "${curse_id}"
         minecraftVersions.add("${minecraft_version}")
-        requires {
-            slug = "trenzalore"
-        }
     }
 
     curseforge("curseforgeFabric") {
@@ -136,7 +60,3 @@ publishMods {
     }
 
 }
-
-
-
-

@@ -1,0 +1,77 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'dev.nanite.mlp'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+def isASnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
+version = "${mod_version}+mc${minecraft_version}${isASnapshot ? '-SNAPSHOT' : ''}"
+setArchivesBaseName("${mod_name}-${project.name}".toLowerCase())
+group = "${maven_group}"
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+base {
+    archivesName = "${project.property("mod_name")}-${project.name}".toLowerCase()
+}
+
+repositories {
+    repositories {
+        maven {
+            name = "NeoForge"
+            url = "https://maven.neoforged.net/"
+        }
+        maven {
+            name = "Fabric"
+            url = "https://maven.fabricmc.net/"
+        }
+        maven {
+            name = "Nanite"
+            url = "https://maven.nanite.dev/releases"
+        }
+        maven {
+            name = "Mek"
+            url = 'https://modmaven.dev/'
+        }
+        maven {
+            name = "Curse Maven"
+            url = "https://cursemaven.com"
+        }
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    outputs.upToDateWhen { false }
+}
+
+test {
+    enabled = false
+}
+
+publishing {
+    repositories {
+        if (providers.environmentVariable("NANITE_TOKEN").isPresent()) {
+            maven {
+                def isSnapshot = providers.environmentVariable("SNAPSHOT").map {it == "true"}.getOrElse(false)
+                url "https://maven.nanite.dev/${isSnapshot ? 'snapshots' : 'releases'}"
+                credentials {
+                    username = "nanite"
+                    password = providers.environmentVariable("NANITE_TOKEN").get()
+                }
+            }
+        }
+    }
+    publications {
+        register("mavenJava", MavenPublication) {
+            groupId project.group
+            artifactId project.getArchivesBaseName()
+        }
+    }
+}

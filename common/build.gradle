@@ -1,3 +1,7 @@
+plugins {
+    id 'multiloader'
+}
+
 multiLoader.common()
 
 publishing.publications.mavenJava.from components.java
