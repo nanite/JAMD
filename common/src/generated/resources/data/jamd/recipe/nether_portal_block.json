@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "O": {
-      "item": "minecraft:nether_bricks"
-    },
-    "P": {
-      "item": "minecraft:netherite_pickaxe"
-    }
+    "O": "minecraft:nether_bricks",
+    "P": "minecraft:netherite_pickaxe"
   },
   "pattern": [
     "OOO",

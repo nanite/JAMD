@@ -121,13 +121,13 @@ public class WorldType {
         List<PlacedFeature> placedFeatures = getFeatures(server);
         for (PlacedFeature placedFeature : placedFeatures) {
 
-            boolean b = server.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
+            boolean b = server.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
 
             if (!b && !placedFeature.feature().is(ingoredConfigFeatures)) {
                 RegistryAccess.Frozen frozen = server.registryAccess();
                 ConfiguredFeature<?, ?> configuredFeatureReference = placedFeature.feature().value();
                 Feature<?> feature1 = configuredFeatureReference.feature();
-                ResourceLocation key1 = frozen.registryOrThrow(Registries.FEATURE).getKey(feature1);
+                ResourceLocation key1 = frozen.lookupOrThrow(Registries.FEATURE).getKey(feature1);
                 FeatureTypeRegistry.getFeatureType(key1).ifPresentOrElse(iFeatureTypeCompact -> {
                     try {
                         oresCodecs.add(iFeatureTypeCompact.getOreCodec(configuredFeatureReference.config(), placedFeature.placement()));

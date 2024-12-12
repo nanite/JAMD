@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class PortalTileEntity extends BlockEntity {
 
     public PortalTileEntity(WorldType worldType, BlockPos blockPos, BlockState blockState) {
-        super(worldType.getBlockEntity().get(), blockPos, blockState);
+        super(worldType.getBlockEntity().getHolder().value(), blockPos, blockState);
     }
 
 }

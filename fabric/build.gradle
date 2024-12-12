@@ -9,6 +9,9 @@ multiLoader.fabric() {
 
 publishing.publications.mavenJava.from components.java
 
+//sourceSets.main.resources { srcDir project(":common").file('src/generated/resources') }
+
+
 dependencies {
     modImplementation("com.unrealdinnerbone:trenzalore-fabric:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
 }

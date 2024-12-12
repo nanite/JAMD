@@ -21,7 +21,7 @@
       "com.unrealdinnerbone.jamd.fabric.JAMDFabric"
     ],
     "fabric-datagen": [
-      "com.unrealdinnerbone.jamd.data.JAMDData"
+      "com.unrealdinnerbone.jamd.client.JAMDData"
     ]
   },
   "depends": {

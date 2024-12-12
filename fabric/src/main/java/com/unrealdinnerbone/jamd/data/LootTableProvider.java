@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class LootTableProvider extends FabricBlockLootTableProvider {
 
-    protected LootTableProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public LootTableProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
 

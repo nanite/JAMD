@@ -1,6 +1,14 @@
-package com.unrealdinnerbone.jamd.data;
+package com.unrealdinnerbone.jamd.client;
 
 import com.unrealdinnerbone.jamd.JAMDRegistry;
+import com.unrealdinnerbone.jamd.data.AdvancementProvider;
+import com.unrealdinnerbone.jamd.data.BlockTagProvider;
+import com.unrealdinnerbone.jamd.data.DRP;
+import com.unrealdinnerbone.jamd.data.FeatureTagProvider;
+import com.unrealdinnerbone.jamd.data.LangProvider;
+import com.unrealdinnerbone.jamd.data.LootTableProvider;
+import com.unrealdinnerbone.jamd.data.PlaceTagProvider;
+import com.unrealdinnerbone.jamd.data.RecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.HolderGetter;
@@ -95,7 +103,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     1.0F,
                     new DimensionType.MonsterSettings(false,
                             false,
-                            UniformInt.of(0, 7), 0)));
+                            UniformInt.of(0, 15), 15)));
         }
     }
 
@@ -141,7 +149,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     1.0F,
                     new DimensionType.MonsterSettings(false,
                             false,
-                            UniformInt.of(0, 7), 0)));
+                            UniformInt.of(0, 15), 15)));
         }
     }
 
@@ -186,7 +194,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     1.0F,
                     new DimensionType.MonsterSettings(false,
                             false,
-                            UniformInt.of(0, 7), 0)));
+                            UniformInt.of(0, 15), 15)));
         }
     }
 }

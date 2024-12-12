@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
 
-    protected AdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public AdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup);
     }
 
@@ -28,7 +28,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         consumer.accept(Advancement.Builder.advancement()
                         .parent(RLUtils.rl("minecraft", "story/mine_diamond"))
                         .display(
-                                JAMDRegistry.OVERWORLD.getItem().get(),
+                                JAMDRegistry.OVERWORLD.getItem().getHolder().value(),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementTitleKey()),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementDescriptionKey()),
                                 null,

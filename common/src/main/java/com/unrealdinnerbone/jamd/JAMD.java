@@ -8,6 +8,10 @@ import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.entity.Display;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.timers.TimerCallback;
+import net.minecraft.world.level.timers.TimerQueue;
 import org.slf4j.Logger;
 
 import java.io.IOException;

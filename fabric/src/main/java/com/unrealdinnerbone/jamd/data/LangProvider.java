@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class LangProvider extends FabricLanguageProvider {
 
-    protected LangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public LangProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, registryLookup);
     }
 

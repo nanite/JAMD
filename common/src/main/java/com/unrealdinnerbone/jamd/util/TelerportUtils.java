@@ -26,7 +26,7 @@ public class TelerportUtils {
                         if (toWorld.getBlockState(portalLocation).isAir()) {
                             toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
                         }
-                        playerEntity.teleportTo(toWorld, portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5, Collections.emptySet(), playerEntity.getYRot(), playerEntity.getXRot());
+                        playerEntity.teleportTo(toWorld, portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5, Collections.emptySet(), playerEntity.getYRot(), playerEntity.getXRot(), true);
                     },
                     () -> playerEntity.displayClientMessage(Component.translatable(JAMD.MOD_ID + ".invalid.pos"), true));
 

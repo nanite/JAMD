@@ -3,7 +3,6 @@ package com.unrealdinnerbone.jamd.neo;
 import com.unrealdinnerbone.jamd.JAMD;
 import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.command.JamdCommand;
-import com.unrealdinnerbone.jamd.neo.compact.MekenismOreCompact;
 import com.unrealdinnerbone.jamd.neo.compact.PBCompact;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -23,7 +22,7 @@ public class JAMDNeo {
     }
 
     public static void registerCompact() {
-        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
+//        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
         FeatureTypeRegistry.register("productivebees", List.of(
                 "sand_nest",
                 "snow_nest",

@@ -1,16 +1,17 @@
 plugins {
-    id("dev.nanite.mlp") version("0.3.0")
+    id("dev.nanite.mlp") version("0.4.2")
     id("java-library")
     id("maven-publish")
-    id("me.modmuss50.mod-publish-plugin") version "0.3.0"
+    id("me.modmuss50.mod-publish-plugin") version "0.8.1"
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.0'
 }
-
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 multiLoader.root() {
     minecraftVersion.set(project.property("minecraft_version"))
+    parchmentMinecraftVersion.set(project.property("minecraft_version"))
+    parchmentVersion.set(project.property("parchment_version"))
     modID.set(project.property("mod_id"))
     splitSources.set(true)
     convertAccessWidener.set(true)

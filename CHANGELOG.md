@@ -1,3 +1,3 @@
-### 6.1.0
+### 21.4.0
 
-- 1.21.1 & Bee Compact
+- Update to Minecraft 1.21.4

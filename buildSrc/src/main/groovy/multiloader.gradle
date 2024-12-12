@@ -75,3 +75,7 @@ publishing {
         }
     }
 }
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}

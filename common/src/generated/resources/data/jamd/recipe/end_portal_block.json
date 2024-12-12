@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "O": {
-      "item": "minecraft:end_stone"
-    },
-    "P": {
-      "item": "minecraft:diamond_pickaxe"
-    }
+    "O": "minecraft:end_stone",
+    "P": "minecraft:diamond_pickaxe"
   },
   "pattern": [
     "OOO",

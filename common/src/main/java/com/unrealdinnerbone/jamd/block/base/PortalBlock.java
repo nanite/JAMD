@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -26,8 +27,8 @@ public abstract class PortalBlock extends Block implements EntityBlock {
 
     private final WorldType type;
 
-    public PortalBlock(WorldType type) {
-        super(Properties.of().strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
+    public PortalBlock(Block.Properties properties, WorldType type) {
+        super(properties);
         this.type = type;
     }
 
@@ -48,7 +49,7 @@ public abstract class PortalBlock extends Block implements EntityBlock {
                 player.displayClientMessage(Component.literal("You can't teleport from this dimension"), true);
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
 }
