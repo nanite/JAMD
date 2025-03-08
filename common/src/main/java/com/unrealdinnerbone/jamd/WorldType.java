@@ -9,6 +9,7 @@ import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.lib.RLUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +51,7 @@ public class WorldType {
     private final TagKey<ConfiguredFeature<?, ?>> ingoredConfigFeatures;
 
     private final TagKey<PlacedFeature> ingoredPlaceFeatures;
+    private final TagKey<PlacementModifierType<?>> ingoredPlacementModifier;
     private final Path configPath;
 
     private final TagKey<Biome> biomeTag;
@@ -61,6 +65,7 @@ public class WorldType {
         this.biomeTag = biomeTag;
         this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
         this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
+        this.ingoredPlacementModifier = TagKey.create(Registries.PLACEMENT_MODIFIER_TYPE, RLUtils.rl(JAMD.MOD_ID, name + "_ignored"));
         this.configPath = JAMD.CONFIG_FOLDER.resolve(name + ".json");
         TYPES.add(this);
     }
@@ -83,6 +88,10 @@ public class WorldType {
 
     public TagKey<ConfiguredFeature<?, ?>> getIgnoredFeatures() {
         return ingoredConfigFeatures;
+    }
+
+    public TagKey<PlacementModifierType<?>> getIngoredPlacementModifier() {
+        return ingoredPlacementModifier;
     }
 
     public TagKey<PlacedFeature> getIgnoredPlaceFeatures() {
@@ -129,8 +138,15 @@ public class WorldType {
                 Feature<?> feature1 = configuredFeatureReference.feature();
                 ResourceLocation key1 = frozen.registryOrThrow(Registries.FEATURE).getKey(feature1);
                 FeatureTypeRegistry.getFeatureType(key1).ifPresentOrElse(iFeatureTypeCompact -> {
+                    List<PlacementModifier> placementModifiers = new ArrayList<>(placedFeature.placement());
+                    placementModifiers.removeIf(placementModifier -> {
+                        Registry<PlacementModifierType<?>> registry = frozen.registryOrThrow(Registries.PLACEMENT_MODIFIER_TYPE);
+                        return registry.getResourceKey(placementModifier.type()).map(placementModifierTypeResourceKey -> {
+                            return registry.getHolderOrThrow(placementModifierTypeResourceKey).is(ingoredPlacementModifier);
+                        }).orElse(false);
+                    });
                     try {
-                        oresCodecs.add(iFeatureTypeCompact.getOreCodec(configuredFeatureReference.config(), placedFeature.placement()));
+                        oresCodecs.add(iFeatureTypeCompact.getOreCodec(configuredFeatureReference.config(), placementModifiers));
                     } catch (ClassCastException e) {
                         LOGGER.error("Failed to parse ore Wrong Ore Config?", e);
                     } catch (Exception e) {

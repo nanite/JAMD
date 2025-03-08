@@ -1,3 +1,3 @@
-### 6.1.0
+### 21.1.1
 
-- 1.21.1 & Bee Compact
+- Fix Create Compact

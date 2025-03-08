@@ -37,6 +37,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         pack.addProvider(AdvancementProvider::new);
         pack.addProvider(FeatureTagProvider::new);
         pack.addProvider(PlaceTagProvider::new);
+        pack.addProvider(PlacementModiferProvider::new);
     }
 
     @Override

@@ -1,0 +1,8 @@
+{
+  "values": [
+    {
+      "id": "create:config_filter",
+      "required": false
+    }
+  ]
+}
