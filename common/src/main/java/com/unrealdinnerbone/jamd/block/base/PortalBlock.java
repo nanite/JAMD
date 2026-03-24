@@ -20,14 +20,13 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class PortalBlock extends Block implements EntityBlock {
 
-
     //Todo CONFIG
     private static final ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
 
     private final WorldType type;
 
-    public PortalBlock(WorldType type) {
-        super(Properties.of().strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
+    public PortalBlock(Block.Properties properties, WorldType type) {
+        super(properties.strength(5.0F, 6.0F).sound(SoundType.STONE).mapColor(MapColor.COLOR_BLUE));
         this.type = type;
     }
 
@@ -45,10 +44,10 @@ public abstract class PortalBlock extends Block implements EntityBlock {
             } else if (level.dimension().equals(OVERWORLD)) {
                 TelerportUtils.teleport(player, type.getKey().level(), pos, type);
             } else {
-                player.displayClientMessage(Component.literal("You can't teleport from this dimension"), true);
+                player.sendOverlayMessage(Component.literal("You can't teleport from this dimension"));
             }
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.SUCCESS_SERVER;
     }
 
 }

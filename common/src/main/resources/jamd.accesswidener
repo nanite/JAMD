@@ -1,4 +1,4 @@
-accessWidener v1 named
+accessWidener v1 official
 accessible field net/minecraft/world/level/levelgen/flat/FlatLevelGeneratorSettings biome Lnet/minecraft/core/Holder;
 accessible method net/minecraft/world/level/levelgen/feature/configurations/OreConfiguration$TargetBlockState <init> (Lnet/minecraft/world/level/levelgen/structure/templatesystem/RuleTest;Lnet/minecraft/world/level/block/state/BlockState;)V
 accessible field net/minecraft/world/level/levelgen/placement/HeightRangePlacement height Lnet/minecraft/world/level/levelgen/heightproviders/HeightProvider;

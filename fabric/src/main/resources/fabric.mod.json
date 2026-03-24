@@ -21,14 +21,13 @@
       "com.unrealdinnerbone.jamd.fabric.JAMDFabric"
     ],
     "fabric-datagen": [
-      "com.unrealdinnerbone.jamd.data.JAMDData"
+      "com.unrealdinnerbone.jamd.fabric.client.JAMDData"
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14",
+    "fabric-api": "*",
     "minecraft": "${minecraft_version}",
-    "java": ">=17",
-    "trenzalore": ">=${trenzalore_version}"
+    "java": ">=25"
   }
 }
   

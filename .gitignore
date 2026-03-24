@@ -31,3 +31,5 @@ logs/
 neo/runs/
 
 common/src/generated/resources/.cache/
+
+fabric/runs/

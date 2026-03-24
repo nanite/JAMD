@@ -6,17 +6,18 @@ import com.mojang.serialization.JsonOps;
 import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
 import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
-import com.unrealdinnerbone.trenzalore.lib.RLUtils;
+import com.unrealdinnerbone.trenzalore.lib.IDUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -44,9 +45,9 @@ public class WorldType {
     public static final List<WorldType> TYPES = new ArrayList<>();
     private final String name;
     private final KeySet key;
-    private final RegistryEntry<Block> block;
-    private final RegistryEntry<BlockItem> item;
-    private final RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity;
+    private final RegistryEntry<Block, Block> block;
+    private final RegistryEntry<Item, BlockItem> item;
+    private final RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> blockEntity;
 
     private final TagKey<ConfiguredFeature<?, ?>> ingoredConfigFeatures;
 
@@ -56,29 +57,29 @@ public class WorldType {
 
     private final TagKey<Biome> biomeTag;
 
-    public WorldType(String name, RegistryEntry<Block> block, RegistryEntry<BlockItem> item, RegistryEntry<BlockEntityType<PortalTileEntity>> blockEntity, TagKey<Biome> biomeTag) {
+    public WorldType(String name, RegistryEntry<Block, Block> block, RegistryEntry<Item, BlockItem> item, RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> blockEntity, TagKey<Biome> biomeTag) {
         this.name = name;
-        this.key = KeySet.of(RLUtils.rl(JAMD.MOD_ID, name));
+        this.key = KeySet.of(IDUtils.id(JAMD.MOD_ID, name));
         this.block = block;
         this.item = item;
         this.blockEntity = blockEntity;
         this.biomeTag = biomeTag;
-        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
-        this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, RLUtils.rl(JAMD.MOD_ID, name));
-        this.ingoredPlacementModifier = TagKey.create(Registries.PLACEMENT_MODIFIER_TYPE, RLUtils.rl(JAMD.MOD_ID, name + "_ignored"));
+        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, IDUtils.id(JAMD.MOD_ID, name));
+        this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, IDUtils.id(JAMD.MOD_ID, name));
+        this.ingoredPlacementModifier = TagKey.create(Registries.PLACEMENT_MODIFIER_TYPE, IDUtils.id(JAMD.MOD_ID, name + "_ignored"));
         this.configPath = JAMD.CONFIG_FOLDER.resolve(name + ".json");
         TYPES.add(this);
     }
 
-    public RegistryEntry<Block> getBlock() {
+    public RegistryEntry<Block, Block> getBlock() {
         return block;
     }
 
-    public RegistryEntry<BlockEntityType<PortalTileEntity>> getBlockEntity() {
+    public RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> getBlockEntity() {
         return blockEntity;
     }
 
-    public RegistryEntry<BlockItem> getItem() {
+    public RegistryEntry<Item, BlockItem> getItem() {
         return item;
     }
 
@@ -130,19 +131,21 @@ public class WorldType {
         List<PlacedFeature> placedFeatures = getFeatures(server);
         for (PlacedFeature placedFeature : placedFeatures) {
 
-            boolean b = server.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
+//            Holder.Reference<Registry<PlacedFeature>> orThrow = server.registryAccess().getOrThrow(Registries.PLACED_FEATURE);
+//            Registry<PlacedFeature> value = orThrow.value();
+//            boolean b = value.wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
 
-            if (!b && !placedFeature.feature().is(ingoredConfigFeatures)) {
+            if (!placedFeature.feature().is(ingoredConfigFeatures)) {
                 RegistryAccess.Frozen frozen = server.registryAccess();
                 ConfiguredFeature<?, ?> configuredFeatureReference = placedFeature.feature().value();
                 Feature<?> feature1 = configuredFeatureReference.feature();
-                ResourceLocation key1 = frozen.registryOrThrow(Registries.FEATURE).getKey(feature1);
+                Identifier key1 = frozen.lookupOrThrow(Registries.FEATURE).getKey(feature1);
                 FeatureTypeRegistry.getFeatureType(key1).ifPresentOrElse(iFeatureTypeCompact -> {
                     List<PlacementModifier> placementModifiers = new ArrayList<>(placedFeature.placement());
                     placementModifiers.removeIf(placementModifier -> {
-                        Registry<PlacementModifierType<?>> registry = frozen.registryOrThrow(Registries.PLACEMENT_MODIFIER_TYPE);
+                        Registry<PlacementModifierType<?>> registry = frozen.lookupOrThrow(Registries.PLACEMENT_MODIFIER_TYPE);
                         return registry.getResourceKey(placementModifier.type()).map(placementModifierTypeResourceKey -> {
-                            return registry.getHolderOrThrow(placementModifierTypeResourceKey).is(ingoredPlacementModifier);
+                            return registry.getOrThrow(placementModifierTypeResourceKey).is(ingoredPlacementModifier);
                         }).orElse(false);
                     });
                     try {
@@ -217,7 +220,7 @@ public class WorldType {
 
     public record KeySet(ResourceKey<Level> level, ResourceKey<DimensionType> dimensionType, ResourceKey<Biome> biome) {
 
-        private static KeySet of(ResourceLocation id) {
+        private static KeySet of(Identifier id) {
             return new KeySet(ResourceKey.create(Registries.DIMENSION, id), ResourceKey.create(Registries.DIMENSION_TYPE, id), ResourceKey.create(Registries.BIOME, id));
         }
     }

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "O": {
-      "item": "minecraft:obsidian"
-    },
-    "P": {
-      "item": "minecraft:diamond_pickaxe"
-    }
+    "O": "minecraft:obsidian",
+    "P": "minecraft:diamond_pickaxe"
   },
   "pattern": [
     "OOO",
@@ -15,7 +11,6 @@
     "OOO"
   ],
   "result": {
-    "count": 1,
     "id": "jamd:portal_block"
   }
 }

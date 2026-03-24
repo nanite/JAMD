@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -20,18 +21,18 @@ import java.util.Optional;
 
 public class TelerportUtils {
     public static void teleport(Player playerEntity, ResourceKey<Level> toWorldKey, BlockPos blockPos, WorldType registrySet) {
-        ServerLevel toWorld = playerEntity.getServer().getLevel(toWorldKey);
+        ServerLevel toWorld = playerEntity.level().getServer().getLevel(toWorldKey);
         if (toWorld != null) {
             findPortalLocation(toWorld, blockPos, registrySet).ifPresentOrElse(portalLocation -> {
                         if (toWorld.getBlockState(portalLocation).isAir()) {
                             toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
                         }
-                        playerEntity.teleportTo(toWorld, portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5, Collections.emptySet(), playerEntity.getYRot(), playerEntity.getXRot());
+                        playerEntity.teleportTo(toWorld, portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5, Collections.emptySet(), playerEntity.getYRot(), playerEntity.getXRot(), true);
                     },
-                    () -> playerEntity.displayClientMessage(Component.translatable(JAMD.MOD_ID + ".invalid.pos"), true));
+                    () -> playerEntity.sendOverlayMessage(Component.translatable(JAMD.MOD_ID + ".invalid.pos")));
 
         } else {
-            playerEntity.displayClientMessage(Component.translatable(JAMD.MOD_ID + ".invalid.world", toWorldKey.location().toString()), true);
+            playerEntity.sendOverlayMessage(Component.translatable(JAMD.MOD_ID + ".invalid.world", toWorldKey.identifier().toString()));
         }
     }
 
@@ -43,7 +44,7 @@ public class TelerportUtils {
 
         int range = 5;
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
-                .map(chunkPos -> worldTo.getChunk(chunkPos.x, chunkPos.z).getBlockEntitiesPos())
+                .map(chunkPos -> worldTo.getChunk(chunkPos.x(), chunkPos.z()).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
                 .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlockEntity().get()))
                 .findFirst()

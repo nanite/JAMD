@@ -6,29 +6,35 @@ multiLoader.neo() {
     neoVersion.set("${neo_version}")
 }
 
+jar {
+    from project(":common").sourceSets.main.output
+}
+
 publishing.publications.mavenJava.from components.java
 
 sourceSets.main.resources { srcDir project(":common").file('src/generated/resources') }
 
-repositories {
-    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
-    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
-    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
-}
-
 dependencies {
     implementation("com.unrealdinnerbone:trenzalore-neo:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
-
-    api "mekanism:Mekanism:${mekanism_version}"
-    api "curse.maven:productivebees-377897:5611632"
-//    api "blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineering_version}"
 }
 
-
-dependencies {
-    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
-    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
-}
+//repositories {
+//    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
+//    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
+//    maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
+//}
+//
+//dependencies {
+////    api "mekanism:Mekanism:${mekanism_version}"
+////    api "curse.maven:productivebees-377897:5611632"
+////    api "blusunrize.immersiveengineering:ImmersiveEngineering:${immersive_engineering_version}"
+//}
+//
+//
+//dependencies {
+////    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+////    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+////    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+////    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+////    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+//}
