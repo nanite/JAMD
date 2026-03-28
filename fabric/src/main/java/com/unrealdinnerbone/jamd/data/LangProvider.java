@@ -18,6 +18,9 @@ public class LangProvider extends FabricLanguageProvider {
         translationBuilder.add(JAMDRegistry.OVERWORLD.getBlock().get(), "Mining Portal");
         translationBuilder.add(JAMDRegistry.NETHER.getBlock().get(), "Nether Mining Portal");
         translationBuilder.add(JAMDRegistry.END.getBlock().get(), "End Mining Portal");
+        translationBuilder.add(JAMDRegistry.OVERWORLD.getItem().get(), "Mining Portal");
+        translationBuilder.add(JAMDRegistry.NETHER.getItem().get(), "Nether Mining Portal");
+        translationBuilder.add(JAMDRegistry.END.getItem().get(), "End Mining Portal");
         translationBuilder.add("jamd.invalid.world", "Unable to find world '%s'");
         translationBuilder.add("jamd.invalid.pos", "Unable to find valid portal location");
         translationBuilder.add("biome.jamd.mining", "Mining");
