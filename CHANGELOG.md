@@ -1,3 +1,3 @@
-### 21.1.1
+### 26.1.1.0
 
-- Fix Create Compact
+- Update to 26.1.1
