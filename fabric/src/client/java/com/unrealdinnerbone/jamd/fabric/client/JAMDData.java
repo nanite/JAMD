@@ -25,6 +25,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TimelineTags;
 import net.minecraft.util.ARGB;
+import net.minecraft.util.ColorRGBA;
+import net.minecraft.util.CommonColors;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.AmbientAdditionsSettings;
@@ -128,7 +130,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                             .set(EnvironmentAttributes.SKY_LIGHT_COLOR, -5480243)
                             .set(EnvironmentAttributes.SKY_COLOR, -16777216)
                             .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.0F)
-                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, -12630209)
+                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
                             .set(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(Musics.END))
                             .set(EnvironmentAttributes.AMBIENT_SOUNDS, AmbientSounds.LEGACY_CAVE_SETTINGS)
                             .set(EnvironmentAttributes.BED_RULE, BedRule.EXPLODES)
@@ -168,7 +170,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
             EnvironmentAttributeMap overworldAttributes = EnvironmentAttributeMap.builder()
                     .set(EnvironmentAttributes.FOG_COLOR, -4138753)
                     .set(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(0.8F))
-                    .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, -16119286)
+                    .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
                     .set(EnvironmentAttributes.BED_RULE, new BedRule(BedRule.Rule.NEVER, BedRule.Rule.ALWAYS, false, Optional.empty()))
                     .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false)
                     .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 1.0F)
@@ -247,7 +249,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                             .set(EnvironmentAttributes.SKY_LIGHT_COLOR, Timelines.NIGHT_SKY_LIGHT_COLOR)
                             .set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4.0F)
                             .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.0F)
-                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, -13621215)
+                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
                             .set(EnvironmentAttributes.DEFAULT_DRIPSTONE_PARTICLE, ParticleTypes.DRIPPING_DRIPSTONE_LAVA)
                             .set(EnvironmentAttributes.BED_RULE, BedRule.EXPLODES)
                             .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, true)

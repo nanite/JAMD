@@ -1,3 +1,3 @@
 ### 26.1.1.0
 
-- Update to 26.1.1
+- Re enable full bright

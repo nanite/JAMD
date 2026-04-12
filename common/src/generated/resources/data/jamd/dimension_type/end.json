@@ -23,7 +23,7 @@
       "explodes": true
     },
     "minecraft:gameplay/respawn_anchor_works": false,
-    "minecraft:visual/ambient_light_color": "#3f473f",
+    "minecraft:visual/ambient_light_color": "#ffffff",
     "minecraft:visual/fog_color": "#181318",
     "minecraft:visual/sky_color": "#000000",
     "minecraft:visual/sky_light_color": "#ac60cd",

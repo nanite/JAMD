@@ -6,7 +6,7 @@
       "can_sleep": "never"
     },
     "minecraft:gameplay/respawn_anchor_works": false,
-    "minecraft:visual/ambient_light_color": "#0a0a0a",
+    "minecraft:visual/ambient_light_color": "#ffffff",
     "minecraft:visual/fog_color": "#c0d8ff",
     "minecraft:visual/fog_end_distance": 256.0,
     "minecraft:visual/fog_start_distance": 256.0,
