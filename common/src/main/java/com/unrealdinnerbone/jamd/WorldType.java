@@ -45,9 +45,9 @@ public class WorldType {
     public static final List<WorldType> TYPES = new ArrayList<>();
     private final String name;
     private final KeySet key;
-    private final RegistryEntry<Block, Block> block;
-    private final RegistryEntry<Item, BlockItem> item;
-    private final RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> blockEntity;
+    private final RegistryEntry<Block> block;
+    private final RegistryEntry<Item> item;
+    private final RegistryEntry<BlockEntityType<?>> blockEntity;
 
     private final TagKey<ConfiguredFeature<?, ?>> ingoredConfigFeatures;
 
@@ -57,7 +57,7 @@ public class WorldType {
 
     private final TagKey<Biome> biomeTag;
 
-    public WorldType(String name, RegistryEntry<Block, Block> block, RegistryEntry<Item, BlockItem> item, RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> blockEntity, TagKey<Biome> biomeTag) {
+    public WorldType(String name, RegistryEntry<Block> block, RegistryEntry<Item> item, RegistryEntry<BlockEntityType<?>> blockEntity, TagKey<Biome> biomeTag) {
         this.name = name;
         this.key = KeySet.of(IDUtils.id(JAMD.MOD_ID, name));
         this.block = block;
@@ -71,15 +71,15 @@ public class WorldType {
         TYPES.add(this);
     }
 
-    public RegistryEntry<Block, Block> getBlock() {
+    public RegistryEntry<Block> getBlock() {
         return block;
     }
 
-    public RegistryEntry<BlockEntityType<?>, BlockEntityType<PortalTileEntity>> getBlockEntity() {
+    public RegistryEntry<BlockEntityType<?>> getBlockEntity() {
         return blockEntity;
     }
 
-    public RegistryEntry<Item, BlockItem> getItem() {
+    public RegistryEntry<Item> getItem() {
         return item;
     }
 
@@ -129,14 +129,18 @@ public class WorldType {
         List<String> loggedTypes = new ArrayList<>();
         List<OresCodec> oresCodecs = new ArrayList<>();
         List<PlacedFeature> placedFeatures = getFeatures(server);
+        RegistryAccess.Frozen frozen = server.registryAccess();
+        Registry<PlacedFeature> placedRegistry = frozen.lookupOrThrow(Registries.PLACED_FEATURE);
         for (PlacedFeature placedFeature : placedFeatures) {
+            if (placedRegistry.wrapAsHolder(placedFeature).is(ingoredPlaceFeatures)) {
+                continue;
+            }
 
 //            Holder.Reference<Registry<PlacedFeature>> orThrow = server.registryAccess().getOrThrow(Registries.PLACED_FEATURE);
 //            Registry<PlacedFeature> value = orThrow.value();
 //            boolean b = value.wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
 
             if (!placedFeature.feature().is(ingoredConfigFeatures)) {
-                RegistryAccess.Frozen frozen = server.registryAccess();
                 ConfiguredFeature<?, ?> configuredFeatureReference = placedFeature.feature().value();
                 Feature<?> feature1 = configuredFeatureReference.feature();
                 Identifier key1 = frozen.lookupOrThrow(Registries.FEATURE).getKey(feature1);

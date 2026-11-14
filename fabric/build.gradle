@@ -7,8 +7,6 @@ multiLoader.fabric() {
     fabricApiVersion.set("${fabric_version}")
 }
 
-publishing.publications.mavenJava.from components.java
-
 dependencies {
     implementation("com.unrealdinnerbone:trenzalore-fabric:${project.property("trenzalore_version")}+mc${project.property("minecraft_version")}")
 }

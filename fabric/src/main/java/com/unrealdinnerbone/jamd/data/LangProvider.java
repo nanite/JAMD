@@ -15,12 +15,12 @@ public class LangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
-        translationBuilder.add(JAMDRegistry.OVERWORLD.getBlock().get(), "Mining Portal");
-        translationBuilder.add(JAMDRegistry.NETHER.getBlock().get(), "Nether Mining Portal");
-        translationBuilder.add(JAMDRegistry.END.getBlock().get(), "End Mining Portal");
-        translationBuilder.add(JAMDRegistry.OVERWORLD.getItem().get(), "Mining Portal");
-        translationBuilder.add(JAMDRegistry.NETHER.getItem().get(), "Nether Mining Portal");
-        translationBuilder.add(JAMDRegistry.END.getItem().get(), "End Mining Portal");
+        translationBuilder.add(JAMDRegistry.OVERWORLD.getBlock().getEntry().get(), "Mining Portal");
+        translationBuilder.add(JAMDRegistry.NETHER.getBlock().getEntry().get(), "Nether Mining Portal");
+        translationBuilder.add(JAMDRegistry.END.getBlock().getEntry().get(), "End Mining Portal");
+        translationBuilder.add(JAMDRegistry.OVERWORLD.getItem().getEntry().get(), "Mining Portal");
+        translationBuilder.add(JAMDRegistry.NETHER.getItem().getEntry().get(), "Nether Mining Portal");
+        translationBuilder.add(JAMDRegistry.END.getItem().getEntry().get(), "End Mining Portal");
         translationBuilder.add("jamd.invalid.world", "Unable to find world '%s'");
         translationBuilder.add("jamd.invalid.pos", "Unable to find valid portal location");
         translationBuilder.add("biome.jamd.mining", "Mining");

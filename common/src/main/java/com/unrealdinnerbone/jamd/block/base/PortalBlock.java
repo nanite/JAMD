@@ -33,7 +33,7 @@ public abstract class PortalBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return type.getBlockEntity().get().create(pos, state);
+        return type.getBlockEntity().getEntry().get().create(pos, state);
     }
 
     @Override

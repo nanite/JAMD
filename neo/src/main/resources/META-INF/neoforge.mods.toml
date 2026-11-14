@@ -5,7 +5,6 @@ license = "All Rights Reserved unless stated otherwise. Distribution permission 
     modId = "jamd"
     version = "${mod_version}"
     displayName = "Just Another Mining Dimension"
-    logoFile = "assets/jamd/logo.png"
     credits = ""
     authors = "UnRealDinnerbone"
     description = "Adds a mining dimension to the game."

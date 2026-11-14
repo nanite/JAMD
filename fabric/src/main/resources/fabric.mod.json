@@ -13,7 +13,6 @@
     "issues": "https://github.com/nanite/jamd/issues"
   },
   "license": "All Rights Reserved unless stated otherwise. Distribution permission is given to FeedTheBeast and CurseForge for use in modpacks",
-  "icon": "assets/jamd/icon.png",
   "accessWidener": "jamd.accesswidener",
   "environment": "*",
   "entrypoints": {

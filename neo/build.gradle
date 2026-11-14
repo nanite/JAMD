@@ -10,8 +10,6 @@ jar {
     from project(":common").sourceSets.main.output
 }
 
-publishing.publications.mavenJava.from components.java
-
 sourceSets.main.resources { srcDir project(":common").file('src/generated/resources') }
 
 dependencies {

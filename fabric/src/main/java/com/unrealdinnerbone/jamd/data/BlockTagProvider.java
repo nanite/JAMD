@@ -17,9 +17,9 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider arg) {
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(JAMDRegistry.OVERWORLD.getBlock().get())
-                .add(JAMDRegistry.NETHER.getBlock().get())
-                .add(JAMDRegistry.END.getBlock().get());
+        builder(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(JAMDRegistry.OVERWORLD.getBlock().key())
+                .add(JAMDRegistry.NETHER.getBlock().key())
+                .add(JAMDRegistry.END.getBlock().key());
     }
 }

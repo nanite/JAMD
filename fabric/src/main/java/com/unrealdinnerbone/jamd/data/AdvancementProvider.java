@@ -25,7 +25,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         consumer.accept(Advancement.Builder.advancement()
                         .parent(IDUtils.id("minecraft", "story/mine_diamond"))
                         .display(
-                                JAMDRegistry.OVERWORLD.getItem().get(),
+                                JAMDRegistry.OVERWORLD.getItem().getEntry().get(),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementTitleKey()),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementDescriptionKey()),
                                 null,
@@ -34,7 +34,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                                 true,
                                 true
                         )
-                        .addCriterion("enter_dimension", net.minecraft.advancements.criterion.ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(JAMDRegistry.OVERWORLD.getKey().level()))
+                        .addCriterion("enter_dimension", net.minecraft.advancements.triggers.ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(JAMDRegistry.OVERWORLD.getKey().level()))
                 .build(IDUtils.id(JAMD.MOD_ID, "enter_mining_dimension")));
     }
 }

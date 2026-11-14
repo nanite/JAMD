@@ -40,6 +40,7 @@ import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
 import net.minecraft.world.level.CardinalLighting;
 import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -108,6 +109,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         }
 
         static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
+            HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
             HolderGetter<Timeline> timelines = context.lookup(Registries.TIMELINE);
             HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
 
@@ -120,7 +122,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     0,
                     256,
                     256,
-                    BlockTags.INFINIBURN_END,
+                    blocks.getOrThrow(BlockTags.INFINIBURN_END),
                     0.25F,
                     new DimensionType.MonsterSettings(ConstantInt.of(15), 0),
                     DimensionType.Skybox.END,
@@ -165,6 +167,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         }
 
         static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
+            HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
             HolderGetter<Timeline> timelines = context.lookup(Registries.TIMELINE);
             HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
             EnvironmentAttributeMap overworldAttributes = EnvironmentAttributeMap.builder()
@@ -187,7 +190,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     -64,
                     384,
                     384,
-                    BlockTags.INFINIBURN_OVERWORLD,
+                    blocks.getOrThrow(BlockTags.INFINIBURN_OVERWORLD),
                     16F,
                     new DimensionType.MonsterSettings(UniformInt.of(0, 7), 0),
                     DimensionType.Skybox.OVERWORLD,
@@ -228,6 +231,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         static void bootstrapDimensionType(BootstrapContext<DimensionType> context) {
             HolderGetter<Timeline> timelines = context.lookup(Registries.TIMELINE);
             HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
+            HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
 
             context.register(JAMDRegistry.NETHER.getKey().dimensionType(), new DimensionType(
                     false,
@@ -238,7 +242,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     0,
                     256,
                     128,
-                    BlockTags.INFINIBURN_NETHER,
+                    blocks.getOrThrow(BlockTags.INFINIBURN_NETHER),
                     0.1F,
                     new DimensionType.MonsterSettings(ConstantInt.of(7), 15),
                     DimensionType.Skybox.NONE,

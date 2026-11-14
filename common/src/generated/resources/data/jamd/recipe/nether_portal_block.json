@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "O": "minecraft:nether_bricks",
     "P": "minecraft:netherite_pickaxe"

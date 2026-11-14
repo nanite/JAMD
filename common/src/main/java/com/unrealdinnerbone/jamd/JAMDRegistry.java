@@ -35,7 +35,7 @@ public class JAMDRegistry implements IRegistry {
     private static final RegistryObjects<BlockEntityType<?>> TILES = Regeneration.create(JAMD.MOD_ID, Registries.BLOCK_ENTITY_TYPE);
     private static final RegistryObjects<MapCodec<? extends ChunkGenerator>> CHUNK_GENERATORS = Regeneration.create(JAMD.MOD_ID, Registries.CHUNK_GENERATOR);
 
-    public static final RegistryEntry<MapCodec<? extends ChunkGenerator>, MapCodec<CustomFlatLevelSource>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
+    public static final RegistryEntry<MapCodec<? extends ChunkGenerator>> CUSTOM_FLAT_LEVEL_SOURCE = CHUNK_GENERATORS.register("mining", () -> CustomFlatLevelSource.CODEC);
 
     public static final WorldType OVERWORLD = of("mining", "portal_block", "portal", OverworldPortalBlock::new, OverworldBlockEntity::new, BiomeTags.IS_OVERWORLD);
 
@@ -46,13 +46,13 @@ public class JAMDRegistry implements IRegistry {
 
     private static WorldType of(String name, String blockName, String tileName, Function<Block.Properties, Block> blockSupplier, Regeneration.BESuppler<PortalTileEntity> tileSupplier, TagKey<Biome> biomeTagKey) {
         RegistryEntry.BlockEntry<Block> block = BLOCKS.register(blockName, blockSupplier, properties -> properties);
-        RegistryEntry.ItemEntry<BlockItem> item = ITEMS.registerBlockItem(blockName, block::entryValue, properties -> properties);
-        return new WorldType(name, block, item, TILES.register(tileName, () -> Regeneration.createBEType(tileSupplier, block.entryValue())), biomeTagKey);
+        RegistryEntry.ItemEntry<BlockItem> item = ITEMS.registerBlockItem(blockName, () -> block.getEntry().get(), properties -> properties);
+        return new WorldType(name, block, item, TILES.register(tileName, () -> Regeneration.createBEType(tileSupplier, block.getEntry().get())), biomeTagKey);
     }
 
     @Override
     public void afterRegistered(ICreativeTabRegister creativeTabRegister) {
-        creativeTabRegister.addItemToCreativeTab(CreativeTabs.FUNCTIONAL_BLOCKS, List.of(OVERWORLD.getItem(), NETHER.getItem(), END.getItem()));
+        creativeTabRegister.addItemToCreativeTab(CreativeTabs.FUNCTIONAL_BLOCKS, List.of(() -> OVERWORLD.getItem().getEntry().get(), () -> NETHER.getItem().getEntry().get(), () -> END.getItem().getEntry().get()));
     }
 
     @Override

@@ -26,7 +26,7 @@ public class RecipeProvider extends FabricRecipeProvider {
         return new net.minecraft.data.recipes.RecipeProvider(registries, output) {
             @Override
             public void buildRecipes() {
-                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.OVERWORLD.getBlock().get())
+                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.OVERWORLD.getBlock().getEntry().get())
                         .pattern("OOO")
                         .pattern("OPO")
                         .pattern("OOO")
@@ -34,7 +34,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                         .define('P', Items.DIAMOND_PICKAXE)
                         .unlockedBy("has_diamond_pick", has(Items.DIAMOND_PICKAXE))
                         .save(output, ResourceKey.create(Registries.RECIPE, IDUtils.id(JAMD.MOD_ID, "portal_block")));
-                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.NETHER.getBlock().get())
+                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.NETHER.getBlock().getEntry().get())
                         .pattern("OOO")
                         .pattern("OPO")
                         .pattern("OOO")
@@ -42,7 +42,7 @@ public class RecipeProvider extends FabricRecipeProvider {
                         .define('P', Items.NETHERITE_PICKAXE)
                         .unlockedBy("has_diamond_pick", has(Items.DIAMOND_PICKAXE))
                         .save(output, ResourceKey.create(Registries.RECIPE, IDUtils.id(JAMD.MOD_ID, "nether_portal_block")));
-                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.END.getBlock().get())
+                shaped(RecipeCategory.TRANSPORTATION, JAMDRegistry.END.getBlock().getEntry().get())
                         .pattern("OOO")
                         .pattern("OPO")
                         .pattern("OOO")

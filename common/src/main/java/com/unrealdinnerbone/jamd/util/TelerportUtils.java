@@ -25,7 +25,7 @@ public class TelerportUtils {
         if (toWorld != null) {
             findPortalLocation(toWorld, blockPos, registrySet).ifPresentOrElse(portalLocation -> {
                         if (toWorld.getBlockState(portalLocation).isAir()) {
-                            toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().get().defaultBlockState());
+                            toWorld.setBlockAndUpdate(portalLocation, registrySet.getBlock().getEntry().get().defaultBlockState());
                         }
                         playerEntity.teleportTo(toWorld, portalLocation.getX() + 0.5, portalLocation.getY() + 1, portalLocation.getZ() + 0.5, Collections.emptySet(), playerEntity.getYRot(), playerEntity.getXRot(), true);
                     },
@@ -38,7 +38,7 @@ public class TelerportUtils {
 
 
     private static Optional<BlockPos> findPortalLocation(Level worldTo, BlockPos fromPos, WorldType registrySet) {
-        if (worldTo.getBlockState(fromPos).is(registrySet.getBlock().get()) && isSafeSpawnLocation(worldTo, fromPos)) {
+        if (worldTo.getBlockState(fromPos).is(registrySet.getBlock().getEntry().get()) && isSafeSpawnLocation(worldTo, fromPos)) {
             return Optional.of(fromPos.above());
         }
 
@@ -46,7 +46,7 @@ public class TelerportUtils {
         return Optional.ofNullable(ChunkPos.rangeClosed(worldTo.getChunkAt(fromPos).getPos(), range)
                 .map(chunkPos -> worldTo.getChunk(chunkPos.x(), chunkPos.z()).getBlockEntitiesPos())
                 .flatMap(Collection::stream).toList().stream()
-                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlockEntity().get()))
+                .filter(pos -> worldTo.getBlockEntity(pos).getType().equals(registrySet.getBlockEntity().getEntry().get()))
                 .findFirst()
                 .orElseGet(() -> {
                     BlockPos heightmapPos = worldTo.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, fromPos);
