@@ -2,15 +2,13 @@ package com.unrealdinnerbone.jamd.util;
 
 import com.unrealdinnerbone.jamd.OresCodec;
 import net.minecraft.core.Holder;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.OreFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class Transformers {
 
     public static PlacedFeature fromConfigCodec(OresCodec oresCodec, boolean ignoreAirChance) {
-        ConfiguredFeature<OreConfiguration, Feature<OreConfiguration>> oreFeature = new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(oresCodec.targets(), oresCodec.oreSize(), ignoreAirChance ? 0 : oresCodec.discardChance()));
-        return new PlacedFeature(Holder.direct(oreFeature), oresCodec.modifiers());
+        OreFeature oreFeatureType = new OreFeature(oresCodec.targets(), oresCodec.oreSize(), ignoreAirChance ? 0 : oresCodec.discardChance());
+        return new PlacedFeature(Holder.direct(oreFeatureType), oresCodec.modifiers());
     }
 }

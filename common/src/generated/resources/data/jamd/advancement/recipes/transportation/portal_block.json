@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "jamd:portal_block"
+        "recipes": "jamd:portal_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

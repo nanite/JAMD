@@ -3,8 +3,8 @@ package com.unrealdinnerbone.jamd;
 import com.google.gson.*;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.MapCodec;
 import com.unrealdinnerbone.jamd.api.FeatureTypeRegistry;
-import com.unrealdinnerbone.jamd.block.base.PortalTileEntity;
 import com.unrealdinnerbone.trenzalore.api.registry.RegistryEntry;
 import com.unrealdinnerbone.trenzalore.lib.IDUtils;
 import net.minecraft.core.Holder;
@@ -16,18 +16,15 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,10 +46,10 @@ public class WorldType {
     private final RegistryEntry<Item> item;
     private final RegistryEntry<BlockEntityType<?>> blockEntity;
 
-    private final TagKey<ConfiguredFeature<?, ?>> ingoredConfigFeatures;
+    private final TagKey<Feature> ingoredConfigFeatures;
 
     private final TagKey<PlacedFeature> ingoredPlaceFeatures;
-    private final TagKey<PlacementModifierType<?>> ingoredPlacementModifier;
+    private final TagKey<MapCodec<? extends PlacementModifier>> ingoredPlacementModifier;
     private final Path configPath;
 
     private final TagKey<Biome> biomeTag;
@@ -64,7 +61,7 @@ public class WorldType {
         this.item = item;
         this.blockEntity = blockEntity;
         this.biomeTag = biomeTag;
-        this.ingoredConfigFeatures = TagKey.create(Registries.CONFIGURED_FEATURE, IDUtils.id(JAMD.MOD_ID, name));
+        this.ingoredConfigFeatures = TagKey.create(Registries.FEATURE, IDUtils.id(JAMD.MOD_ID, name));
         this.ingoredPlaceFeatures = TagKey.create(Registries.PLACED_FEATURE, IDUtils.id(JAMD.MOD_ID, name));
         this.ingoredPlacementModifier = TagKey.create(Registries.PLACEMENT_MODIFIER_TYPE, IDUtils.id(JAMD.MOD_ID, name + "_ignored"));
         this.configPath = JAMD.CONFIG_FOLDER.resolve(name + ".json");
@@ -87,11 +84,11 @@ public class WorldType {
         return key;
     }
 
-    public TagKey<ConfiguredFeature<?, ?>> getIgnoredFeatures() {
+    public TagKey<Feature> getIgnoredFeatures() {
         return ingoredConfigFeatures;
     }
 
-    public TagKey<PlacementModifierType<?>> getIngoredPlacementModifier() {
+    public TagKey<MapCodec<? extends PlacementModifier>> getIngoredPlacementModifier() {
         return ingoredPlacementModifier;
     }
 
@@ -141,19 +138,18 @@ public class WorldType {
 //            boolean b = value.wrapAsHolder(placedFeature).is(ingoredPlaceFeatures);
 
             if (!placedFeature.feature().is(ingoredConfigFeatures)) {
-                ConfiguredFeature<?, ?> configuredFeatureReference = placedFeature.feature().value();
-                Feature<?> feature1 = configuredFeatureReference.feature();
-                Identifier key1 = frozen.lookupOrThrow(Registries.FEATURE).getKey(feature1);
-                FeatureTypeRegistry.getFeatureType(key1).ifPresentOrElse(iFeatureTypeCompact -> {
+                Feature feature1 = placedFeature.feature().value();
+                Identifier key1 = frozen.lookupOrThrow(Registries.PLACED_FEATURE).getKey(placedFeature);
+                FeatureTypeRegistry.getFeatureType(feature1.getClass()).ifPresentOrElse(iFeatureTypeCompact -> {
                     List<PlacementModifier> placementModifiers = new ArrayList<>(placedFeature.placement());
                     placementModifiers.removeIf(placementModifier -> {
-                        Registry<PlacementModifierType<?>> registry = frozen.lookupOrThrow(Registries.PLACEMENT_MODIFIER_TYPE);
-                        return registry.getResourceKey(placementModifier.type()).map(placementModifierTypeResourceKey -> {
+                        Registry<MapCodec<? extends PlacementModifier>> registry = frozen.lookupOrThrow(Registries.PLACEMENT_MODIFIER_TYPE);
+                        return registry.getResourceKey(placementModifier.codec()).map(placementModifierTypeResourceKey -> {
                             return registry.getOrThrow(placementModifierTypeResourceKey).is(ingoredPlacementModifier);
                         }).orElse(false);
                     });
                     try {
-                        oresCodecs.add(iFeatureTypeCompact.getOreCodec(configuredFeatureReference.config(), placementModifiers));
+                        oresCodecs.add(iFeatureTypeCompact.getOreCodec(feature1, placementModifiers));
                     } catch (ClassCastException e) {
                         LOGGER.error("Failed to parse ore Wrong Ore Config?", e);
                     } catch (Exception e) {

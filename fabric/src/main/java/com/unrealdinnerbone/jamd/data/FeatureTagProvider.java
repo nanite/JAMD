@@ -6,14 +6,14 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.OreFeatures;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FeatureTagProvider extends FabricTagsProvider<ConfiguredFeature<?, ?>> {
+public class FeatureTagProvider extends FabricTagsProvider<Feature> {
 
     public FeatureTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, Registries.CONFIGURED_FEATURE, registriesFuture);
+        super(output, Registries.FEATURE, registriesFuture);
     }
 
     @Override

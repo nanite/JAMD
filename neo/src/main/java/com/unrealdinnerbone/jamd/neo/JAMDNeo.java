@@ -23,23 +23,23 @@ public class JAMDNeo {
 
     public static void registerCompact() {
 //        FeatureTypeRegistry.register("mekanism", "ore", MekenismOreCompact::new);
-        FeatureTypeRegistry.register("productivebees", List.of(
-                "sand_nest",
-                "snow_nest",
-                "stone_nest",
-                "coarse_dirt_nest",
-                "gravel_nest",
-                "slimy_nest",
-                "sugar_cane_nest",
-                "glowstone_nest",
-                "nether_quartz_nest",
-                "nether_quartz_nest_high",
-                "nether_fortress_nest",
-                "soul_sand_nest",
-                "end_nest",
-                "obsidian_pillar_nest",
-                "bumble_bee_nest"
-        ), PBCompact::new);
+//        FeatureTypeRegistry.register("productivebees", List.of(
+//                "sand_nest",
+//                "snow_nest",
+//                "stone_nest",
+//                "coarse_dirt_nest",
+//                "gravel_nest",
+//                "slimy_nest",
+//                "sugar_cane_nest",
+//                "glowstone_nest",
+//                "nether_quartz_nest",
+//                "nether_quartz_nest_high",
+//                "nether_fortress_nest",
+//                "soul_sand_nest",
+//                "end_nest",
+//                "obsidian_pillar_nest",
+//                "bumble_bee_nest"
+//        ), PBCompact::new);
     }
 
     public void onRegisterCommands(RegisterCommandsEvent event) {

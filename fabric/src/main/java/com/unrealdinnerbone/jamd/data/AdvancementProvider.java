@@ -28,7 +28,6 @@ public class AdvancementProvider extends FabricAdvancementProvider {
                                 JAMDRegistry.OVERWORLD.getItem().getEntry().get(),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementTitleKey()),
                                 Component.translatable(JAMDRegistry.OVERWORLD.getAdvancementDescriptionKey()),
-                                null,
                                 AdvancementType.TASK,
                                 true,
                                 true,

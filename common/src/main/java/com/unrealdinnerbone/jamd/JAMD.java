@@ -8,6 +8,8 @@ import com.unrealdinnerbone.trenzalore.api.platform.Services;
 import com.unrealdinnerbone.trenzalore.lib.IDUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.levelgen.feature.OreFeature;
+import net.minecraft.world.level.levelgen.feature.ScatteredOreFeature;
 import org.slf4j.Logger;
 
 import java.io.IOException;
@@ -20,8 +22,8 @@ public class JAMD {
     public static final String MOD_ID = "jamd";
 
     public static void init() {
-        FeatureTypeRegistry.register("minecraft", "ore", MinecraftOreCompact::new);
-        FeatureTypeRegistry.register("minecraft", "scattered_ore", MinecraftOreCompact::new);
+        FeatureTypeRegistry.register(OreFeature.class, MinecraftOreCompact::new);
+        FeatureTypeRegistry.register(ScatteredOreFeature.class, MinecraftOreCompact::new);
     }
 
     public static void onServerStart(MinecraftServer server) {

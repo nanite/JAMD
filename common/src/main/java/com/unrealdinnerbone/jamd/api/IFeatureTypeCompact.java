@@ -1,14 +1,14 @@
 package com.unrealdinnerbone.jamd.api;
 
 import com.unrealdinnerbone.jamd.OresCodec;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 import java.util.List;
 
-public interface IFeatureTypeCompact<T> {
+public interface IFeatureTypeCompact<T extends Feature> {
 
-    default OresCodec getOreCodec(FeatureConfiguration feature, List<PlacementModifier> modifiers) throws IllegalArgumentException {
+    default OresCodec getOreCodec(Feature feature, List<PlacementModifier> modifiers) throws IllegalArgumentException {
         return parse((T) feature, modifiers);
     }
 

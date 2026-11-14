@@ -8,7 +8,6 @@ import com.unrealdinnerbone.jamd.data.FeatureTagProvider;
 import com.unrealdinnerbone.jamd.data.LangProvider;
 import com.unrealdinnerbone.jamd.data.LootTableProvider;
 import com.unrealdinnerbone.jamd.data.PlaceTagProvider;
-import com.unrealdinnerbone.jamd.data.PlacementModiferProvider;
 import com.unrealdinnerbone.jamd.data.RecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -44,7 +43,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.timeline.Timeline;
 import net.minecraft.world.timeline.Timelines;
@@ -66,7 +66,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
         pack.addProvider(AdvancementProvider::new);
         pack.addProvider(FeatureTagProvider::new);
         pack.addProvider(PlaceTagProvider::new);
-        pack.addProvider(PlacementModiferProvider::new);
+//        pack.addProvider(PlacementModiferProvider::new);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
     public static class End {
         static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-            HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+            HolderGetter<WorldCarver> configuredWorldCarvers = context.lookup(Registries.CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
             context.register(JAMDRegistry.END.getKey().biome(), new Biome.BiomeBuilder()
                     .temperature(0.5f)
@@ -128,14 +128,14 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     DimensionType.Skybox.END,
                     CardinalLighting.Type.DEFAULT,
                     EnvironmentAttributeMap.builder()
-                            .set(EnvironmentAttributes.FOG_COLOR, -15199464)
-                            .set(EnvironmentAttributes.SKY_LIGHT_COLOR, -5480243)
-                            .set(EnvironmentAttributes.SKY_COLOR, -16777216)
+                            .set(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(-15199464))
+                            .set(EnvironmentAttributes.SKY_LIGHT_COLOR, ARGB.vector3fFromRGB24(-5480243))
+                            .set(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(-16777216))
                             .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.0F)
-                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
+                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, ARGB.vector3fFromRGB24(CommonColors.WHITE))
                             .set(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(Musics.END))
                             .set(EnvironmentAttributes.AMBIENT_SOUNDS, AmbientSounds.LEGACY_CAVE_SETTINGS)
-                            .set(EnvironmentAttributes.BED_RULE, BedRule.EXPLODES)
+                            .set(EnvironmentAttributes.BED_RULE, BedRule.DESTROY_ON_USE)
                             .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false)
                             .build(),
                     timelines.getOrThrow(TimelineTags.IN_END),
@@ -146,7 +146,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
     public static class Overworld {
         static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-            HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+            HolderGetter<WorldCarver> configuredWorldCarvers = context.lookup(Registries.CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
             BiomeDefaultFeatures.addDefaultOres(builder);
             BiomeDefaultFeatures.addExtraEmeralds(builder);
@@ -171,10 +171,10 @@ public class JAMDData implements DataGeneratorEntrypoint {
             HolderGetter<Timeline> timelines = context.lookup(Registries.TIMELINE);
             HolderGetter<WorldClock> clocks = context.lookup(Registries.WORLD_CLOCK);
             EnvironmentAttributeMap overworldAttributes = EnvironmentAttributeMap.builder()
-                    .set(EnvironmentAttributes.FOG_COLOR, -4138753)
-                    .set(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(0.8F))
-                    .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
-                    .set(EnvironmentAttributes.BED_RULE, new BedRule(BedRule.Rule.NEVER, BedRule.Rule.ALWAYS, false, Optional.empty()))
+                    .set(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(-4138753))
+                    .set(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(OverworldBiomes.calculateSkyColor(0.8F)))
+                    .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, ARGB.vector3fFromRGB24(CommonColors.WHITE))
+                    .set(EnvironmentAttributes.BED_RULE, new BedRule(BedRule.Rule.NEVER, BedRule.Rule.ALWAYS, false, false, Optional.empty()))
                     .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, false)
                     .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 1.0F)
                     .set(EnvironmentAttributes.FOG_START_DISTANCE, 256F)
@@ -204,7 +204,7 @@ public class JAMDData implements DataGeneratorEntrypoint {
     public static class Nether {
         static void bootstrapBiome(BootstrapContext<Biome> context) {
             HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-            HolderGetter<ConfiguredWorldCarver<?>> configuredWorldCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+            HolderGetter<WorldCarver> configuredWorldCarvers = context.lookup(Registries.CARVER);
             BiomeGenerationSettings.Builder builder = new BiomeGenerationSettings.Builder(placedFeatures, configuredWorldCarvers);
             BiomeDefaultFeatures.addNetherDefaultOres(builder);
             context.register(JAMDRegistry.NETHER.getKey().biome(), new Biome.BiomeBuilder()
@@ -250,12 +250,12 @@ public class JAMDData implements DataGeneratorEntrypoint {
                     EnvironmentAttributeMap.builder()
                             .set(EnvironmentAttributes.FOG_START_DISTANCE, 10.0F)
                             .set(EnvironmentAttributes.FOG_END_DISTANCE, 96.0F)
-                            .set(EnvironmentAttributes.SKY_LIGHT_COLOR, Timelines.NIGHT_SKY_LIGHT_COLOR)
+                            .set(EnvironmentAttributes.SKY_LIGHT_COLOR, ARGB.vector3fFromRGB24(Timelines.NIGHT_SKY_LIGHT_COLOR))
                             .set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4.0F)
                             .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.0F)
-                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, CommonColors.WHITE)
+                            .set(EnvironmentAttributes.AMBIENT_LIGHT_COLOR, ARGB.vector3fFromRGB24(CommonColors.WHITE))
                             .set(EnvironmentAttributes.DEFAULT_DRIPSTONE_PARTICLE, ParticleTypes.DRIPPING_DRIPSTONE_LAVA)
-                            .set(EnvironmentAttributes.BED_RULE, BedRule.EXPLODES)
+                            .set(EnvironmentAttributes.BED_RULE, BedRule.DESTROY_ON_USE)
                             .set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, true)
                             .set(EnvironmentAttributes.WATER_EVAPORATES, true)
                             .set(EnvironmentAttributes.FAST_LAVA, true)
